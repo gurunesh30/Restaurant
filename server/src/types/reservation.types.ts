@@ -23,6 +23,7 @@ export interface Reservation {
   notes?: string;
   status: BookingStatus;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface CreateReservationDto {

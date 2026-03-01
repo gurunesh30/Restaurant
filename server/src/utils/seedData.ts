@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
 import dotenv from "dotenv";
 import Category from "../models/Category.js";
 import MenuItem from "../models/MenuItem.js";
 import connectDB from "../config/db.js";
+import type mongoose from "mongoose";
 
 dotenv.config();
 
@@ -399,6 +399,10 @@ const seedData = async () => {
         console.log("Connected to MongoDB");
 
         // Clear existing data for these models
+        if (process.env.NODE_ENV === "production" && process.env.ALLOW_PROD_SEED !== "true") {
+            throw new Error("Refusing destructive seed in production without ALLOW_PROD_SEED=true");
+        }
+
         await Category.deleteMany({});
         await MenuItem.deleteMany({});
         console.log("Cleared existing categories and menu items.");
@@ -408,17 +412,21 @@ const seedData = async () => {
         console.log(`Inserted ${createdCategories.length} categories.`);
 
         // Map category slugs to ObjectIds
-        const categoryMap = createdCategories.reduce((acc, cat) => {
+        const categoryMap = createdCategories.reduce<Record<string, mongoose.Types.ObjectId>>((acc, cat) => {
             acc[cat.slug] = cat._id;
             return acc;
-        }, {} as Record<string, any>); // Use any here as Types.ObjectId doesn't natively map to string indexes well in TS easily without cast
+        }, {});
 
         // Prepare and insert menu items
         const menuItemsToInsert = indianMenuItems.map(item => {
             const { categorySlug, ...rest } = item;
+            const categoryId = categoryMap[categorySlug];
+            if (!categoryId) {
+                throw new Error(`Unknown categorySlug "${categorySlug}" in seed data`);
+            }
             return {
                 ...rest,
-                category: categoryMap[categorySlug], // Resolve object reference
+                category: categoryId, // Resolve object reference
             };
         });
 

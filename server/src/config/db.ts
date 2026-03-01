@@ -29,8 +29,7 @@ const connectDB = async (): Promise<void> => {
 
   } catch (error) {
     console.error("❌ Database Connection Error:");
-    console.error(error instanceof Error ? error.message : error);
-    // Don't exit yet so we can read the error
+    throw error instanceof Error ? error : new Error(String(error));
   }
 };
 

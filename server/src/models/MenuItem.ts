@@ -23,7 +23,7 @@ const menuItemSchema = new Schema<IMenuItem>(
     {
         name: { type: String, required: true },
         description: { type: String, required: true },
-        price: { type: Number, required: true },
+        price: { type: Number, required: true, min: 0 },
         category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
         image: {
             url: { type: String, required: true },
@@ -31,7 +31,7 @@ const menuItemSchema = new Schema<IMenuItem>(
         },
         isVeg: { type: Boolean, required: true },
         isTrending: { type: Boolean, default: false },
-        rating: { type: Number, default: 0 },
+        rating: { type: Number, default: 0, min: 0, max: 5 },
         available: { type: Boolean, default: true },
     },
     { timestamps: true }

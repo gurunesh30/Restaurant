@@ -16,8 +16,8 @@ export interface ITable extends Document {
 
 const tableSchema = new Schema<ITable>(
   {
-    tableNumber: { type: Number, required: true, unique: true },
-    capacity: { type: Number, required: true },
+    tableNumber: { type: Number, required: true, unique: true, min: 1 },
+    capacity: { type: Number, required: true, min: 1 },
     position: {
       x: { type: Number, required: true },
       y: { type: Number, required: true },
