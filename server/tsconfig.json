@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    // --- File Layout ---
+    "rootDir": "./src",                        // Where your TS files live
+    "outDir": "./dist",                       // Where the compiled JS goes
+    "removeComments": true,
+
+    // --- Environment Settings ---
+    "module": "nodenext",                     // Crucial for Node 22 + ESM
+    "moduleResolution": "nodenext",           // Matches modern Node behavior
+    "target": "esnext",                       // Leverages Node 22's capabilities
+    "lib": ["esnext"],                        // Adds modern JS fe  atures (like Array.at)
+    "types": ["node"],                        // Links @types/node
+
+    // --- Other Outputs ---
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // --- Stricter Typechecking Options ---
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // --- Style Options (Uncommented for best practice) ---
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // --- Recommended Options ---
+    "strict": true,
+    "verbatimModuleSyntax": true,             // Forces you to use 'import type'
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+    "esModuleInterop": true,                  // Helps with libraries like Morgan/Cors
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
