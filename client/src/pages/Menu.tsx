@@ -5,13 +5,6 @@ import { useMenu } from '../hooks/useMenu';
 import type { MenuItem } from '../types/menu.types';
 import MenuItemCard from '../components/common/MenuItemCard';
 
-/* ── Random suggestion pool ───────────────────────── */
-const SUGGESTIONS = [
-    'biryani', 'butter chicken', 'paneer tikka', 'dal makhani',
-    'naan', 'samosa', 'vindaloo', 'korma', 'rogan josh', 'palak paneer',
-    'chana masala', 'aloo paratha', 'lassi', 'gulab jamun', 'rasmalai',
-    'dosa', 'idli', 'pav bhaji', 'chole bhature', 'halwa',
-];
 
 /* ── Sort options ─────────────────────────────────── */
 const SORT_OPTIONS = [
@@ -230,11 +223,13 @@ const Menu: React.FC = () => {
         return () => document.removeEventListener('mousedown', handle);
     }, []);
 
-    /* ── Random suggestion ── */
+    /* ── Random suggestion (uses real loaded items) ── */
     const handleSuggest = () => {
-        const random = SUGGESTIONS[Math.floor(Math.random() * SUGGESTIONS.length)];
+        const available = items.filter(it => it.available);
+        if (available.length === 0) return;
+        const random = available[Math.floor(Math.random() * available.length)];
         setIsSparkled(true);
-        setSearchTerm(random);
+        setSearchTerm(random.name);
         setTimeout(() => setIsSparkled(false), 600);
     };
 
