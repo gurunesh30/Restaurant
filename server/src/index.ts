@@ -1,4 +1,6 @@
 import dotenv from 'dotenv';
+dotenv.config();
+
 import app from './app.js';
 import connectDB from './config/db.js';
 import './models/User.js';
@@ -7,9 +9,7 @@ import './models/Table.js';
 import './models/Reservation.js';
 import './models/Category.js';
 
-dotenv.config();
-
-const PORT = process.env.PORT || 8000;
+const PORT = 8000;
 
 const startServer = async () => {
   try {
