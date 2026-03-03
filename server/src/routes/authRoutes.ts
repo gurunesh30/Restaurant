@@ -1,32 +1,39 @@
 import express from 'express';
 import passport from 'passport';
-import { 
-  googleAuthCallback, 
-  getMe, 
-  logout 
+import {
+  register,
+  login,
+  googleAuthCallback,
+  getMe,
+  logout,
 } from '../controllers/authController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// @desc    Initiate Google Auth
-// @route   GET /api/auth/google
+// ── Local auth ─────────────────────────────────────────────────
+// POST /api/auth/register
+router.post('/register', register);
+
+// POST /api/auth/login
+router.post('/login', login);
+
+// ── Google OAuth ───────────────────────────────────────────────
+// GET /api/auth/google
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// @desc    Google Auth Callback
-// @route   GET /api/auth/google/callback
+// GET /api/auth/google/callback
 router.get(
   '/google/callback',
-  passport.authenticate('google', { session: false, failureRedirect: '/login' }),
+  passport.authenticate('google', { session: false, failureRedirect: '/login?error=google' }),
   googleAuthCallback
 );
 
-// @desc    Get current user profile
-// @route   GET /api/auth/me
+// ── Protected ─────────────────────────────────────────────────
+// GET /api/auth/me
 router.get('/me', protect, getMe);
 
-// @desc    Logout
-// @route   GET /api/auth/logout
+// GET /api/auth/logout
 router.get('/logout', logout);
 
 export default router;

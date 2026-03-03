@@ -1,20 +1,30 @@
+import dotenv from 'dotenv';
+dotenv.config(); // ← must run FIRST so env vars are available for passport config
+
 import express from 'express';
-import type { Application, Request, Response } from 'express'
+import type { Application, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
+// ⚠️ Import passport config BEFORE routes so the Google strategy is registered
+import passport from './config/passport.js';
+
 const app: Application = express();
 
-// Middleware
+// ── Core middleware ────────────────────────────────────────────
 app.use(helmet());
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true
+  origin: process.env.FRONTEND_URL || process.env.CLIENT_URL || 'http://localhost:5173',
+  credentials: true,
 }));
 app.use(morgan('dev'));
 app.use(express.json());
 
+// Passport (needed for Google OAuth session serialization)
+app.use(passport.initialize());
+
+// ── Routes ────────────────────────────────────────────────────
 import authRoutes from './routes/authRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import menuRoutes from './routes/menuRoutes.js';
@@ -23,12 +33,11 @@ import reservationRoutes from './routes/reservationRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 
-// Health Check Route
+// Health check
 app.get('/', (_req: Request, res: Response) => {
   res.send('🥗 Indian Restaurant API is cooking...');
 });
 
-// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/menu', menuRoutes);

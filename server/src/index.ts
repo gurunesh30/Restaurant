@@ -1,5 +1,3 @@
-import dotenv from 'dotenv';
-
 import app from './app.js';
 import connectDB from './config/db.js';
 import './models/User.js';
@@ -9,7 +7,6 @@ import './models/Reservation.js';
 import './models/Category.js';
 
 const PORT = 8000;
-dotenv.config();
 
 const startServer = async () => {
   try {
