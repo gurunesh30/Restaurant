@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShoppingBasket, Star, Flame, LeafIcon } from 'lucide-react';
+import { ShoppingBasket, Star, Flame, LeafIcon, Drumstick } from 'lucide-react';
 import type { MenuItem } from '../../types/menu.types';
 import { useIntersection } from '../../hooks/useIntersection';
 import { useCart } from '../../context/CartContext';
@@ -194,7 +194,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, index = 0 }) => {
                                 background: item.isVeg ? 'rgba(22,163,74,0.08)' : 'rgba(220,38,38,0.08)',
                                 padding: '0.2rem 0.6rem', borderRadius: '9999px',
                             }}>
-                                <LeafIcon size={11} strokeWidth={2.5} />
+                                {item.isVeg ? <LeafIcon size={11} strokeWidth={2.5} /> : <Drumstick size={11} strokeWidth={2.5} />}
                                 {item.isVeg ? 'Veg' : 'Non-Veg'}
                             </span>
 

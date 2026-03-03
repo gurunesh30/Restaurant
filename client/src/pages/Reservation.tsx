@@ -37,20 +37,26 @@ const AC_PRICE = 499;
 const NON_AC_PRICE = 299;
 
 const INITIAL_TABLES: Table[] = [
-    // AC section — 8 seats each
+    // ── AC Section — 8 seats each — top row (T1–T7)
     { id: 'a1', number: 1, section: 'AC', seats: 8, status: 'available' },
     { id: 'a2', number: 2, section: 'AC', seats: 8, status: 'booked', bookedBy: 'Rahul Mehta' },
     { id: 'a3', number: 3, section: 'AC', seats: 8, status: 'available' },
     { id: 'a4', number: 4, section: 'AC', seats: 8, status: 'booked', bookedBy: 'Priya Sharma' },
     { id: 'a5', number: 5, section: 'AC', seats: 8, status: 'available' },
     { id: 'a6', number: 6, section: 'AC', seats: 8, status: 'available' },
-    // Non-AC section — 4 seats each
-    { id: 'n1', number: 7, section: 'NON_AC', seats: 4, status: 'available' },
-    { id: 'n2', number: 8, section: 'NON_AC', seats: 4, status: 'booked', bookedBy: 'Anil Kumar' },
-    { id: 'n3', number: 9, section: 'NON_AC', seats: 4, status: 'available' },
-    { id: 'n4', number: 10, section: 'NON_AC', seats: 4, status: 'available' },
-    { id: 'n5', number: 11, section: 'NON_AC', seats: 4, status: 'booked', bookedBy: 'Sneha Patel' },
-    { id: 'n6', number: 12, section: 'NON_AC', seats: 4, status: 'available' },
+    { id: 'a7', number: 7, section: 'AC', seats: 8, status: 'booked', bookedBy: 'Kiran Desai' },
+    // ── AC Section — right column (T8–T12) going downward
+    { id: 'a8', number: 8, section: 'AC', seats: 8, status: 'available' },
+    { id: 'a9', number: 9, section: 'AC', seats: 8, status: 'available' },
+    // ── Non-AC Section — 4 seats each — 4 rows of 4
+    { id: 'n1', number: 13, section: 'NON_AC', seats: 4, status: 'available' },
+    { id: 'n2', number: 14, section: 'NON_AC', seats: 4, status: 'booked', bookedBy: 'Anil Kumar' },
+    { id: 'n3', number: 15, section: 'NON_AC', seats: 4, status: 'available' },
+    { id: 'n4', number: 16, section: 'NON_AC', seats: 4, status: 'available' },
+    { id: 'n5', number: 17, section: 'NON_AC', seats: 4, status: 'booked', bookedBy: 'Sneha Patel' },
+    { id: 'n6', number: 18, section: 'NON_AC', seats: 4, status: 'available' },
+    { id: 'n7', number: 19, section: 'NON_AC', seats: 4, status: 'available' },
+    { id: 'n8', number: 20, section: 'NON_AC', seats: 4, status: 'available' },
 ];
 
 const TIME_SLOTS = [
@@ -750,14 +756,88 @@ const Reservation: React.FC = () => {
                     </div>
                 </div>
 
+                {/* ── AC Floor Plan: Flipped-L shape ─────────────────────────────
+                    Top row: T1–T7 across the full width (7 tables)
+                    Right column: T8–T12 going down the right side (5 tables)
+                ─────────────────────────────────────────────────────────────── */}
                 <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(175px, 1fr))',
-                    gap: '1.25rem',
+                    background: 'white',
+                    borderRadius: '1.5rem',
+                    padding: '1.5rem',
+                    boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
+                    position: 'relative',
+                    overflow: 'hidden',
                 }}>
-                    {acTables.map(t => (
-                        <TableCard key={t.id} table={t} onClick={handleTableClick} justBooked={t.id === justBookedId} />
-                    ))}
+                    {/* Room wall decorative border */}
+                    <div style={{
+                        position: 'absolute', inset: 0,
+                        borderRadius: '1.5rem',
+                        border: '3px solid rgba(59,130,246,0.12)',
+                        pointerEvents: 'none',
+                    }} />
+
+                    {/* Floor label */}
+                    <div style={{
+                        position: 'absolute', top: '0.5rem', left: '50%', transform: 'translateX(-50%)',
+                        fontSize: '0.65rem', fontWeight: 700, color: 'rgba(59,130,246,0.5)',
+                        letterSpacing: '0.15em', textTransform: 'uppercase', whiteSpace: 'nowrap',
+                    }}>🚪 Entrance</div>
+
+                    {/* Top row — 7 AC tables */}
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(7, 1fr)',
+                        gap: '0.875rem',
+                        marginBottom: '1rem',
+                        marginTop: '1.25rem',
+                    }}>
+                        {acTables.slice(0, 7).map(t => (
+                            <TableCard key={t.id} table={t} onClick={handleTableClick} justBooked={t.id === justBookedId} />
+                        ))}
+                    </div>
+
+                    {/* Right-column + spacer row */}
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: '1fr auto',
+                        gap: '1rem',
+                        alignItems: 'start',
+                    }}>
+                        {/* Centre aisle / walkway */}
+                        <div style={{
+                            background: 'repeating-linear-gradient(90deg, rgba(59,130,246,0.03) 0px, rgba(59,130,246,0.03) 6px, transparent 6px, transparent 18px)',
+                            borderRadius: '1rem',
+                            border: '1px dashed rgba(59,130,246,0.12)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            minHeight: '320px',
+                            fontSize: '0.75rem', fontWeight: 700,
+                            color: 'rgba(59,130,246,0.3)',
+                            letterSpacing: '0.12em', textTransform: 'uppercase',
+                            flexDirection: 'column', gap: '0.375rem',
+                        }}>
+                            <span style={{ fontSize: '1.5rem' }}>🛤️</span>
+                            Walkway
+                        </div>
+
+                        {/* Right column — 5 AC tables stacked vertically */}
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '0.875rem',
+                            width: '175px',
+                        }}>
+                            {acTables.slice(7, 12).map(t => (
+                                <TableCard key={t.id} table={t} onClick={handleTableClick} justBooked={t.id === justBookedId} />
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Bottom wall label */}
+                    <div style={{
+                        textAlign: 'center', marginTop: '0.75rem',
+                        fontSize: '0.65rem', fontWeight: 700,
+                        color: 'rgba(59,130,246,0.4)', letterSpacing: '0.12em', textTransform: 'uppercase',
+                    }}>🧱 East Wall</div>
                 </div>
             </section>
 
@@ -799,10 +879,11 @@ const Reservation: React.FC = () => {
                     </div>
                 </div>
 
+                {/* 4 rows × 4 columns */}
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(155px, 1fr))',
-                    gap: '1.25rem',
+                    gridTemplateColumns: 'repeat(4, 1fr)',
+                    gap: '1.1rem',
                 }}>
                     {nonAcTables.map(t => (
                         <TableCard key={t.id} table={t} onClick={handleTableClick} justBooked={t.id === justBookedId} />
