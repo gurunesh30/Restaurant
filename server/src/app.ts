@@ -12,9 +12,24 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
+import authRoutes from './routes/authRoutes.js';
+import categoryRoutes from './routes/categoryRoutes.js';
+import menuRoutes from './routes/menuRoutes.js';
+import tableRoutes from './routes/tableRoutes.js';
+import reservationRoutes from './routes/reservationRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+
 // Health Check Route
-app.get('/', (req: Request, res: Response) => {
+app.get('/', (_req: Request, res: Response) => {
   res.send('🥗 Indian Restaurant API is cooking...');
 });
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/menu', menuRoutes);
+app.use('/api/tables', tableRoutes);
+app.use('/api/reservations', reservationRoutes);
+app.use('/api/admin', adminRoutes);
 
 export default app;
