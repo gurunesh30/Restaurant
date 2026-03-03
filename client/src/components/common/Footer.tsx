@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
                     <div style={{ maxWidth: '20rem' }}>
                         <Link to="/" style={{ display: 'flex', alignItems: 'flex-end' }}>
                             <img
-                                alt="logoImg"
+                                alt="Annapurna logo"
                                 style={{ height: '3rem' }}
                                 src="/FoodieFiesta_files/logo-hvC0bAJS.svg"
                             />
@@ -27,21 +27,22 @@ const Footer: React.FC = () => {
                                 <span style={{
                                     display: 'block',
                                     fontWeight: 800,
-                                    fontSize: '1.875rem',
+                                    fontSize: '1.75rem',
                                     position: 'relative',
                                     top: '4px',
                                     left: '4px',
-                                }}>Foodie</span>
+                                    letterSpacing: '-0.02em',
+                                }}>Annapurna</span>
                                 <span style={{
                                     display: 'block',
                                     fontWeight: 800,
-                                    fontSize: '0.75rem',
+                                    fontSize: '0.7rem',
                                     position: 'relative',
                                     left: '6px',
-                                    letterSpacing: '10px',
+                                    letterSpacing: '9px',
                                     textTransform: 'uppercase',
                                     color: 'var(--color-solid)',
-                                }}>Fiesta</span>
+                                }}></span>
                             </div>
                         </Link>
                         <p style={{ marginTop: '1.25rem', fontSize: '0.875rem' }}>
@@ -150,7 +151,7 @@ const Footer: React.FC = () => {
                     padding: '1.25rem 0',
                 }}>
                     <div style={{ display: 'flex', width: '100%', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem' }}>
-                        <p>© {new Date().getFullYear()} <a href="/" style={{ color: 'inherit' }}>FoodieFiesta</a>. All rights reserved.</p>
+                        <p>© {new Date().getFullYear()} <a href="/" style={{ color: 'inherit' }}>Annapurna</a>. All rights reserved.</p>
                         <ul style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.875rem' }}>
                             {['Privacy', 'Terms', 'Sitemap'].map(item => (
                                 <li key={item}><a href="#" style={{ color: 'var(--color-gray-50)' }}>{item}</a></li>

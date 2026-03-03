@@ -630,3 +630,145 @@ hr {
   font-size: 2.5rem;
   font-weight: 700;
 }
+
+/* ─── Bootstrap Overrides (our design tokens win) ─── */
+body {
+  background-color: var(--color-primary) !important;
+  font-family: 'Inter', sans-serif !important;
+  color: var(--color-textColor) !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.btn-primary {
+  background-color: var(--color-solid) !important;
+  border-color: var(--color-solid) !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-solidOne) !important;
+  border-color: var(--color-solidOne) !important;
+}
+
+.card {
+  border-radius: 1rem !important;
+  border: 1px solid rgba(220, 88, 62, 0.08) !important;
+}
+
+/* ─── Smooth Animation Keyframes ─── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -500px 0;
+  }
+
+  100% {
+    background-position: 500px 0;
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease both;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-slideLeft {
+  animation: slideInLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-slideRight {
+  animation: slideInRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0e9e6 25%, #fde8df 50%, #f0e9e6 75%);
+  background-size: 500px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 0.5rem;
+}
