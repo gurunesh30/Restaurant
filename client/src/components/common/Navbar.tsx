@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ShoppingBasket, Menu, X } from 'lucide-react';
+import ScrollProgress from './ScrollProgress';
 
 const Navbar: React.FC = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -12,7 +13,6 @@ const Navbar: React.FC = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Close menu on resize to desktop
     useEffect(() => {
         const handleResize = () => { if (window.innerWidth >= 1024) setMenuOpen(false); };
         window.addEventListener('resize', handleResize);
@@ -29,18 +29,18 @@ const Navbar: React.FC = () => {
                     right: 0,
                     zIndex: 50,
                     padding: '0.75rem 0',
-                    backgroundColor: scrolled ? 'rgba(255,244,241,0.95)' : 'transparent',
-                    backdropFilter: scrolled ? 'blur(10px)' : 'none',
-                    boxShadow: scrolled ? '0 1px 12px rgba(0,0,0,0.08)' : 'none',
+                    backgroundColor: scrolled ? 'rgba(255,244,241,0.96)' : 'transparent',
+                    backdropFilter: scrolled ? 'blur(12px)' : 'none',
+                    boxShadow: scrolled ? '0 1px 14px rgba(0,0,0,0.08)' : 'none',
                     transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
                 }}
             >
                 <div className="padd-container flexBetween">
-                    {/* Logo */}
+                    {/* ── Logo ── */}
                     <div style={{ display: 'flex', flex: 1 }}>
                         <Link to="/" style={{ display: 'flex', alignItems: 'flex-end' }}>
                             <img
-                                alt="logoImg"
+                                alt="Annapurna logo"
                                 style={{ height: '3rem' }}
                                 src="/FoodieFiesta_files/logo-hvC0bAJS.svg"
                             />
@@ -48,26 +48,27 @@ const Navbar: React.FC = () => {
                                 <span style={{
                                     display: 'block',
                                     fontWeight: 800,
-                                    fontSize: '1.875rem',
+                                    fontSize: '1.75rem',
                                     position: 'relative',
                                     top: '4px',
                                     left: '4px',
-                                }}>Foodie</span>
+                                    letterSpacing: '-0.02em',
+                                }}>Annapurna</span>
                                 <span style={{
                                     display: 'block',
                                     fontWeight: 800,
-                                    fontSize: '0.75rem',
+                                    fontSize: '0.7rem',
                                     position: 'relative',
                                     left: '6px',
-                                    letterSpacing: '10px',
+                                    letterSpacing: '9px',
                                     textTransform: 'uppercase',
                                     color: 'var(--color-solid)',
-                                }}>Fiesta</span>
+                                }}>Junction</span>
                             </div>
                         </Link>
                     </div>
 
-                    {/* Desktop Nav */}
+                    {/* ── Desktop Nav ── */}
                     <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
                         <nav style={{ display: 'none' }} className="desktop-nav">
                             {[
@@ -89,6 +90,7 @@ const Navbar: React.FC = () => {
                                         fontWeight: 700,
                                         color: 'var(--color-textColor)',
                                         transition: 'color 0.2s',
+                                        position: 'relative',
                                     }}
                                 >
                                     {label}
@@ -97,7 +99,7 @@ const Navbar: React.FC = () => {
                         </nav>
                     </div>
 
-                    {/* Right side actions */}
+                    {/* ── Right side actions ── */}
                     <div style={{
                         display: 'flex',
                         flex: 1,
@@ -115,7 +117,12 @@ const Navbar: React.FC = () => {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 minWidth: '2.75rem',
-                            }}>
+                                boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+                                transition: 'transform 0.2s, box-shadow 0.2s',
+                            }}
+                                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.12)'; }}
+                                onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.08)'; }}
+                            >
                                 <ShoppingBasket size={22} color="var(--color-textColor)" />
                             </div>
                             <span style={{
@@ -135,7 +142,7 @@ const Navbar: React.FC = () => {
                             }}>0</span>
                         </div>
 
-                        {/* Sign In */}
+                        {/* Sign In – desktop only */}
                         <Link
                             to="/login"
                             style={{ display: 'none' }}
@@ -160,28 +167,36 @@ const Navbar: React.FC = () => {
                                 background: 'white',
                                 borderRadius: '9999px',
                                 transition: 'all 0.2s',
+                                boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
                             }}
                         >
-                            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+                            <div style={{ transition: 'transform 0.3s', transform: menuOpen ? 'rotate(90deg)' : 'none' }}>
+                                {menuOpen ? <X size={20} /> : <Menu size={20} />}
+                            </div>
                         </button>
                     </div>
                 </div>
+
+                {/* ── Scroll Progress Bar ── */}
+                <ScrollProgress />
             </header>
 
-            {/* Mobile Menu Overlay */}
-            {menuOpen && (
-                <div
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        zIndex: 40,
-                        backgroundColor: 'rgba(0,0,0,0.4)',
-                    }}
-                    onClick={() => setMenuOpen(false)}
-                />
-            )}
+            {/* ── Mobile Overlay ── */}
+            <div
+                onClick={() => setMenuOpen(false)}
+                style={{
+                    position: 'fixed',
+                    inset: 0,
+                    zIndex: 40,
+                    backgroundColor: 'rgba(0,0,0,0.45)',
+                    backdropFilter: 'blur(2px)',
+                    opacity: menuOpen ? 1 : 0,
+                    pointerEvents: menuOpen ? 'auto' : 'none',
+                    transition: 'opacity 0.3s ease',
+                }}
+            />
 
-            {/* Mobile Menu Drawer */}
+            {/* ── Mobile Drawer ── */}
             <div
                 style={{
                     position: 'fixed',
@@ -191,9 +206,9 @@ const Navbar: React.FC = () => {
                     width: '280px',
                     zIndex: 45,
                     backgroundColor: 'var(--color-primary)',
-                    boxShadow: '-4px 0 20px rgba(0,0,0,0.15)',
+                    boxShadow: '-4px 0 30px rgba(0,0,0,0.18)',
                     transform: menuOpen ? 'translateX(0)' : 'translateX(100%)',
-                    transition: 'transform 0.35s var(--ease-in-out)',
+                    transition: 'transform 0.38s cubic-bezier(0.4,0,0.2,1)',
                     padding: '5rem 2rem 2rem',
                     display: 'flex',
                     flexDirection: 'column',
@@ -213,16 +228,18 @@ const Navbar: React.FC = () => {
                         height: '2.5rem',
                         background: 'white',
                         borderRadius: '9999px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
                     }}
                 >
                     <X size={20} />
                 </button>
+
                 {[
                     { to: '/', label: 'Home' },
                     { to: '/menu', label: 'Menu' },
                     { to: '/reservation', label: 'Reservation' },
                     { to: '/contact', label: 'Contact' },
-                ].map(({ to, label }) => (
+                ].map(({ to, label }, i) => (
                     <NavLink
                         key={to}
                         to={to}
@@ -237,12 +254,20 @@ const Navbar: React.FC = () => {
                             backgroundColor: isActive ? 'rgba(220,88,62,0.08)' : 'transparent',
                             transition: 'all 0.2s',
                             display: 'block',
+                            opacity: menuOpen ? 1 : 0,
+                            transform: menuOpen ? 'translateX(0)' : 'translateX(20px)',
+                            transitionDelay: `${i * 50}ms`,
                         })}
                     >
                         {label}
                     </NavLink>
                 ))}
-                <div style={{ marginTop: '1.5rem' }}>
+                <div style={{
+                    marginTop: '1.5rem',
+                    opacity: menuOpen ? 1 : 0,
+                    transform: menuOpen ? 'translateX(0)' : 'translateX(20px)',
+                    transition: 'all 0.3s 0.2s',
+                }}>
                     <Link
                         to="/login"
                         onClick={() => setMenuOpen(false)}
