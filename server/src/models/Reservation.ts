@@ -1,3 +1,4 @@
+
 import { Schema, model, Document, Types } from "mongoose";
 
 export type BookingStatus = "pending" | "confirmed" | "cancelled" | "completed";
