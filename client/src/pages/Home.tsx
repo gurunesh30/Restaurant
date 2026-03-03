@@ -372,12 +372,12 @@ const Home: React.FC = () => {
                 }}>
                     {/* Text content */}
                     <div style={{ maxWidth: '50rem' }}>
-                        <h3 style={{ color: 'var(--color-textColor)' }}>Fresh Bites for Every Mood</h3>
-                        <h2 style={{ textTransform: 'uppercase', marginBottom: 0, letterSpacing: '0.22rem' }}>
+                        <h3 className="animate-fadeInUp" style={{ color: 'var(--color-textColor)' }}>Fresh Bites for Every Mood</h3>
+                        <h2 className="animate-fadeInUp delay-100" style={{ textTransform: 'uppercase', marginBottom: 0, letterSpacing: '0.22rem' }}>
                             <span style={{ color: 'var(--color-solidOne)' }}>Get More </span>
                             <span style={{ color: 'var(--color-solidTwo)' }}>for Less – 25% Off!</span>
                         </h2>
-                        <h1 style={{ fontWeight: 800, lineHeight: 1 }}>on Rice &amp; Curries</h1>
+                        <h1 className="animate-fadeInUp delay-200" style={{ fontWeight: 800, lineHeight: 1 }}>on Rice &amp; Curries</h1>
                         <div style={{ display: 'flex', alignItems: 'center', marginTop: '1rem' }}>
                             <h3>Starting From</h3>
                             <span style={{
@@ -393,7 +393,7 @@ const Home: React.FC = () => {
                                 <span style={{ fontSize: '1.5rem' }}></span>
                             </span>
                         </div>
-                        <Link to="/menu">
+                        <Link to="/menu" className="animate-fadeInUp delay-300">
                             <button className="btn-solid" style={{ borderRadius: 0, padding: '1.25rem', width: '13rem', fontSize: '1.125rem', fontWeight: 700, marginTop: '2rem' }}>
                                 Shop Now
                             </button>
@@ -401,7 +401,7 @@ const Home: React.FC = () => {
                     </div>
 
                     {/* User review badge (bottom-left of hero) */}
-                    <div style={{ marginTop: '2.25rem', paddingBottom: '2.25rem' }}>
+                    <div className="animate-fadeInUp delay-400" style={{ marginTop: '2.25rem', paddingBottom: '2.25rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                             {/* User avatars */}
                             <div style={{ display: 'flex' }}>
@@ -455,16 +455,16 @@ const Home: React.FC = () => {
                 <div className="padd-container">
                     {/* Section header */}
                     <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-                        <h3 style={{ textTransform: 'uppercase' }}>
+                        <h3 className="animate-fadeInUp" style={{ textTransform: 'uppercase' }}>
                             Trending<span style={{ fontWeight: 300, color: 'var(--color-solidTwo)' }}> Now</span>
                         </h3>
-                        <p style={{ maxWidth: '32rem', margin: '0.5rem auto 0', textAlign: 'center' }}>
+                        <p className="animate-fadeIn delay-200" style={{ maxWidth: '32rem', margin: '0.5rem auto 0', textAlign: 'center' }}>
                             Discover fresh foods that delight your taste, nourish your body, and bring joy to every meal.
                         </p>
                     </div>
 
                     {/* Big image slider */}
-                    <div style={{ position: 'relative', borderRadius: '1.5rem', overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.12)' }}>
+                    <div className="animate-scaleIn delay-200" style={{ position: 'relative', borderRadius: '1.5rem', overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.12)' }}>
                         {/* Slide */}
                         {TRENDING_SLIDES.map((slide, i) => (
                             <div
