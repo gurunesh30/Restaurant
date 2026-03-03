@@ -19,68 +19,55 @@ const Menu: React.FC = () => {
     };
 
     return (
-        <div className="min-vh-100" style={{ backgroundColor: '#F1EDE4', position: 'relative', overflow: 'hidden' }}>
+        <div className="container py-5">
+            {/* Page Header */}
+            <div className="text-center mb-5 mt-4">
+                <h1 className="fw-bold display-4 mb-3">
+                    Explore Our <span className="text-primary-custom">Menu</span>
+                </h1>
+                <p className="text-muted lead mx-auto" style={{ maxWidth: '700px' }}>
+                    Discover the authentic taste of Indian cuisine. Prepared fresh daily with the finest spices and traditional recipes passed down through generations.
+                </p>
+            </div>
 
-            {/* Decorative Blob pattern - minimal implementation */}
-            <div
-                className="position-absolute rounded-circle"
-                style={{
-                    width: '400px',
-                    height: '400px',
-                    backgroundColor: 'rgba(230, 74, 25, 0.05)',
-                    top: '-10%',
-                    right: '-5%',
-                    filter: 'blur(50px)',
-                    zIndex: 0
-                }}
-            ></div>
-
-            <div className="container py-5" style={{ position: 'relative', zIndex: 1 }}>
-                {/* Page Header */}
-                <div className="text-center mb-5">
-                    <h1 className="fw-bold display-4 text-dark mb-3" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-                        Our <span style={{ color: '#E64A19' }}>Menu</span>
-                    </h1>
-                    <p className="text-muted lead mx-auto" style={{ maxWidth: '600px', fontFamily: "'Lexend', sans-serif" }}>
-                        Discover the real taste of Indian food. Authentic spices, traditional recipes, and pure love in every bite.
-                    </p>
-                </div>
-
-                {/* Search Bar */}
-                <div className="row justify-content-center mb-5">
-                    <div className="col-12 col-md-8 col-lg-6">
-                        <form onSubmit={handleSearch} className="position-relative">
+            {/* Search Bar */}
+            <div className="row justify-content-center mb-5">
+                <div className="col-12 col-md-8 col-lg-6">
+                    <form onSubmit={handleSearch}>
+                        <div className="input-group shadow-sm rounded-pill overflow-hidden bg-white p-1 border">
+                            <span className="input-group-text bg-transparent border-0 ps-4 text-muted">
+                                <i className="bi bi-search"></i>
+                            </span>
                             <input
                                 type="text"
-                                className="form-control form-control-lg rounded-pill border-0 shadow-sm ps-4 pe-5"
+                                className="form-control border-0 shadow-none bg-transparent py-3"
                                 placeholder="Search for your favorite dish..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                style={{ backgroundColor: '#ffffff' }}
                             />
                             <button
                                 type="submit"
-                                className="btn position-absolute top-50 end-0 translate-middle-y rounded-circle me-1"
-                                style={{ backgroundColor: '#FFC107', width: '40px', height: '40px', padding: 0 }}
+                                className="btn btn-primary-custom rounded-pill px-4 m-1 fw-bold"
                             >
-                                <i className="bi bi-search text-dark"></i>
-                                <span className="visually-hidden">Search</span>
+                                Search
                             </button>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
+            </div>
 
-                {/* Content Section */}
-                {!categoriesLoading && categories.length > 0 && (
-                    <CategoryTabs
-                        categories={categories}
-                        selectedCategoryId={filters.categoryId}
-                        onSelectCategory={handleCategoryChange}
-                    />
-                )}
+            {/* Category Tabs Section */}
+            {!categoriesLoading && categories.length > 0 && (
+                <CategoryTabs
+                    categories={categories}
+                    selectedCategoryId={filters.categoryId}
+                    onSelectCategory={handleCategoryChange}
+                />
+            )}
 
+            {/* Grid List */}
+            <div className="mt-4">
                 <MenuGrid items={items} loading={menuLoading} error={menuError} />
-
             </div>
         </div>
     );

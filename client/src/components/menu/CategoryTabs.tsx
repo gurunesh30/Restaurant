@@ -13,37 +13,28 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     onSelectCategory
 }) => {
     return (
-        <div className="mb-5 overflow-auto">
-            <div className="d-flex flex-nowrap pb-2 mx-auto" style={{ gap: '15px' }}>
-                <button
-                    className={`btn rounded-pill px-4 py-2 fw-bold text-nowrap flex-shrink-0 border-0 ${!selectedCategoryId ? 'shadow-sm active-tab text-white' : 'bg-white text-muted shadow-sm'
-                        }`}
-                    style={{
-                        backgroundColor: !selectedCategoryId ? '#E64A19' : 'transparent',
-                        transition: 'all 0.3s ease',
-                        fontFamily: "'Montserrat', sans-serif"
-                    }}
-                    onClick={() => onSelectCategory(undefined)}
-                >
-                    All Menu
-                </button>
+        <div className="mb-5 border-bottom pb-3">
+            <ul className="nav nav-pills d-flex flex-nowrap overflow-auto" style={{ whiteSpace: 'nowrap', paddingBottom: '10px' }}>
+                <li className="nav-item">
+                    <button
+                        className={`nav-link custom-tab border-0 bg-transparent ${!selectedCategoryId ? 'active shadow-sm' : ''}`}
+                        onClick={() => onSelectCategory(undefined)}
+                    >
+                        🌟 All Items
+                    </button>
+                </li>
 
                 {categories.map((category) => (
-                    <button
-                        key={category._id}
-                        className={`btn rounded-pill px-4 py-2 fw-bold text-nowrap flex-shrink-0 border-0 ${selectedCategoryId === category._id ? 'shadow-sm active-tab text-white' : 'bg-white text-muted shadow-sm'
-                            }`}
-                        style={{
-                            backgroundColor: selectedCategoryId === category._id ? '#E64A19' : 'transparent',
-                            transition: 'all 0.3s ease',
-                            fontFamily: "'Montserrat', sans-serif"
-                        }}
-                        onClick={() => onSelectCategory(category._id)}
-                    >
-                        {category.name}
-                    </button>
+                    <li className="nav-item" key={category._id}>
+                        <button
+                            className={`nav-link custom-tab border-0 bg-transparent ${selectedCategoryId === category._id ? 'active shadow-sm' : ''}`}
+                            onClick={() => onSelectCategory(category._id)}
+                        >
+                            {category.name}
+                        </button>
+                    </li>
                 ))}
-            </div>
+            </ul>
         </div>
     );
 };
