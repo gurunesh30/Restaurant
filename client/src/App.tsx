@@ -1,25 +1,52 @@
-import {useEffect } from 'react';
-import './App.css'
-import { Container, Button, Row, Col } from 'react-bootstrap';
-import gsap from 'gsap';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-function App() {
-  useEffect(() => {
-    gsap.to(".logo", { rotation: 360, duration: 2, ease: "bounce.out" });
-  }, []);
-  
-  return (
-    <Container className="mt-5">
-      <Row className="text-center">
-        <Col>
-          <h1 className="display-4 text-warning">Welcome to Our Restaurant</h1>
-          <p className="lead">Authentic Indian Flavors at Your Doorstep.</p>
-          <Button variant="success" size="lg">View Menu</Button>
-        </Col>
-      </Row>
-      <img src="./logo.svg" className="logo" />
-    </Container>
-  )
-}
+// Layouts
+import MainLayout from './layouts/MainLayout';
+import AdminLayout from './layouts/AdminLayout';
 
-export default App
+// Components
+import ScrollToTop from './components/common/ScrollToTop';
+
+// Pages
+import Landing from './pages/Landing';
+import Home from './pages/Home';
+import Menu from './pages/Menu';
+import Reservation from './pages/Reservation';
+import Contact from './pages/Contact';
+import Login from './pages/Login';
+import NotFound from './pages/NotFound';
+
+const App: React.FC = () => {
+    return (
+        <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+                {/* Public Routes with MainLayout */}
+                <Route element={<MainLayout />}>
+                    <Route path="/" element={<Landing />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/menu" element={<Menu />} />
+                    <Route path="/reservation" element={<Reservation />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/login" element={<Login />} />
+                </Route>
+
+                {/* Admin Routes with AdminLayout */}
+                <Route path="/admin" element={<AdminLayout />}>
+                    <Route index element={<div>Admin Dashboard Placeholder</div>} />
+                    <Route path="dashboard" element={<div>Admin Dashboard Placeholder</div>} />
+                    <Route path="menu" element={<div>Admin Menu Placeholder</div>} />
+                    <Route path="bookings" element={<div>Admin Bookings Placeholder</div>} />
+                </Route>
+
+                {/* 404 Route */}
+                <Route path="*" element={<MainLayout />} >
+                    <Route path="*" element={<NotFound />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    );
+};
+
+export default App;
