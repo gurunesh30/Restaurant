@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { ShoppingBasket, Menu, X, LogOut, ShieldCheck, ChevronDown } from 'lucide-react';
+import { ShoppingBasket, Menu, X, LogOut, ShieldCheck, ChevronDown, UserCircle } from 'lucide-react';
 import ScrollProgress from './ScrollProgress';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
@@ -173,6 +173,11 @@ const Navbar: React.FC = () => {
                                             <div style={{ fontSize: '0.72rem', color: 'var(--color-gray-400)' }}>{user?.email}</div>
                                         </div>
                                         <div style={{ height: '1px', background: 'rgba(0,0,0,0.06)', margin: '0.25rem 0' }} />
+                                        <button onClick={() => { navigate('/profile'); setUserDropOpen(false); }} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.625rem 0.875rem', background: 'none', border: 'none', cursor: 'pointer', borderRadius: '0.625rem', fontSize: '0.875rem', fontWeight: 600, color: 'var(--color-textColor)' }}
+                                            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(220,88,62,0.06)'; }}
+                                            onMouseLeave={e => { e.currentTarget.style.background = 'none'; }}>
+                                            <UserCircle size={15} color="var(--color-solid)" /> My Profile
+                                        </button>
                                         {isAdmin && (
                                             <button onClick={() => { navigate('/admin'); setUserDropOpen(false); }} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.625rem 0.875rem', background: 'none', border: 'none', cursor: 'pointer', borderRadius: '0.625rem', fontSize: '0.875rem', fontWeight: 600, color: '#3b82f6' }}
                                                 onMouseEnter={e => { e.currentTarget.style.background = 'rgba(59,130,246,0.08)'; }}

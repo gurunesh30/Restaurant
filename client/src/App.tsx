@@ -20,7 +20,9 @@ import Contact from './pages/Contact';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import LoginSuccess from './pages/LoginSuccess';
+import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
+
 
 const App: React.FC = () => {
     return (
@@ -39,6 +41,7 @@ const App: React.FC = () => {
                             <Route path="/contact" element={<Contact />} />
                             <Route path="/checkout" element={<Checkout />} />
                             <Route path="/login" element={<Login />} />
+                            <Route path="/profile" element={<Profile />} />
                             {/* Google OAuth redirect landing */}
                             <Route path="/login-success" element={<LoginSuccess />} />
                         </Route>
