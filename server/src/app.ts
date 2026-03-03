@@ -21,6 +21,7 @@ import menuRoutes from './routes/menuRoutes.js';
 import tableRoutes from './routes/tableRoutes.js';
 import reservationRoutes from './routes/reservationRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import contactRoutes from './routes/contactRoutes.js';
 
 // Health Check Route
 app.get('/', (_req: Request, res: Response) => {
@@ -34,5 +35,6 @@ app.use('/api/menu', menuRoutes);
 app.use('/api/tables', tableRoutes);
 app.use('/api/reservations', reservationRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/contact', contactRoutes);
 
 export default app;
