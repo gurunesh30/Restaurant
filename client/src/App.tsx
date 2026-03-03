@@ -9,7 +9,6 @@ import AdminLayout from './layouts/AdminLayout';
 import ScrollToTop from './components/common/ScrollToTop';
 
 // Pages
-import Landing from './pages/Landing';
 import Home from './pages/Home';
 import Menu from './pages/Menu';
 import Reservation from './pages/Reservation';
@@ -24,7 +23,7 @@ const App: React.FC = () => {
             <Routes>
                 {/* Public Routes with MainLayout */}
                 <Route element={<MainLayout />}>
-                    <Route path="/" element={<Landing />} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/menu" element={<Menu />} />
                     <Route path="/reservation" element={<Reservation />} />

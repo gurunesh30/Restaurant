@@ -5,9 +5,9 @@ import Footer from '../components/common/Footer';
 
 const MainLayout: React.FC = () => {
     return (
-        <div className="d-flex flex-column min-vh-100">
+        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <Navbar />
-            <main className="flex-grow-1" style={{ backgroundColor: '#F1EDE4' }}>
+            <main style={{ flex: 1 }}>
                 <Outlet />
             </main>
             <Footer />

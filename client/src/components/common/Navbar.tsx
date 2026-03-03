@@ -1,51 +1,267 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { ShoppingBasket, Menu, X } from 'lucide-react';
 
 const Navbar: React.FC = () => {
-    return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm py-3">
-            <div className="container">
-                <Link className="navbar-brand d-flex align-items-center fw-bold fs-4" to="/">
-                    <i className="bi bi-fire text-primary-custom me-2"></i>
-                    <span className="text-dark">Indian</span><span className="text-primary-custom ms-1">Spice</span>
-                </Link>
-                <button
-                    className="navbar-toggler border-0 shadow-none px-0"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
 
-                <div className="collapse navbar-collapse" id="navbarContent">
-                    <ul className="navbar-nav mx-auto mb-2 mb-lg-0 fw-bold gap-lg-3">
-                        <li className="nav-item">
-                            <NavLink className={({ isActive }) => `nav-link px-3 ${isActive ? 'text-primary-custom' : ''}`} to="/">Home</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className={({ isActive }) => `nav-link px-3 ${isActive ? 'text-primary-custom' : ''}`} to="/menu">Menu</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className={({ isActive }) => `nav-link px-3 ${isActive ? 'text-primary-custom' : ''}`} to="/reservation">Reservation</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className={({ isActive }) => `nav-link px-3 ${isActive ? 'text-primary-custom' : ''}`} to="/contact">Contact</NavLink>
-                        </li>
-                    </ul>
-                    <div className="d-flex align-items-center mt-3 mt-lg-0">
-                        <Link to="/login" className="btn btn-outline-dark rounded-pill px-4 fw-bold me-2">
-                            Sign In
-                        </Link>
-                        <Link to="/reservation" className="btn btn-primary-custom rounded-pill px-4 fw-bold">
-                            Book a Table
+    useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 20);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Close menu on resize to desktop
+    useEffect(() => {
+        const handleResize = () => { if (window.innerWidth >= 1024) setMenuOpen(false); };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return (
+        <>
+            <header
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    zIndex: 50,
+                    padding: '0.75rem 0',
+                    backgroundColor: scrolled ? 'rgba(255,244,241,0.95)' : 'transparent',
+                    backdropFilter: scrolled ? 'blur(10px)' : 'none',
+                    boxShadow: scrolled ? '0 1px 12px rgba(0,0,0,0.08)' : 'none',
+                    transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
+                }}
+            >
+                <div className="padd-container flexBetween">
+                    {/* Logo */}
+                    <div style={{ display: 'flex', flex: 1 }}>
+                        <Link to="/" style={{ display: 'flex', alignItems: 'flex-end' }}>
+                            <img
+                                alt="logoImg"
+                                style={{ height: '3rem' }}
+                                src="/FoodieFiesta_files/logo-hvC0bAJS.svg"
+                            />
+                            <div>
+                                <span style={{
+                                    display: 'block',
+                                    fontWeight: 800,
+                                    fontSize: '1.875rem',
+                                    position: 'relative',
+                                    top: '4px',
+                                    left: '4px',
+                                }}>Foodie</span>
+                                <span style={{
+                                    display: 'block',
+                                    fontWeight: 800,
+                                    fontSize: '0.75rem',
+                                    position: 'relative',
+                                    left: '6px',
+                                    letterSpacing: '10px',
+                                    textTransform: 'uppercase',
+                                    color: 'var(--color-solid)',
+                                }}>Fiesta</span>
+                            </div>
                         </Link>
                     </div>
+
+                    {/* Desktop Nav */}
+                    <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
+                        <nav style={{ display: 'none' }} className="desktop-nav">
+                            {[
+                                { to: '/', label: 'Home' },
+                                { to: '/menu', label: 'Menu' },
+                                { to: '/reservation', label: 'Reservation' },
+                                { to: '/contact', label: 'Contact' },
+                            ].map(({ to, label }) => (
+                                <NavLink
+                                    key={to}
+                                    to={to}
+                                    end={to === '/'}
+                                    className={({ isActive }) => isActive ? 'active-link' : ''}
+                                    style={{
+                                        padding: '0.5rem 0.75rem',
+                                        borderRadius: '9999px',
+                                        textTransform: 'uppercase',
+                                        fontSize: '0.875rem',
+                                        fontWeight: 700,
+                                        color: 'var(--color-textColor)',
+                                        transition: 'color 0.2s',
+                                    }}
+                                >
+                                    {label}
+                                </NavLink>
+                            ))}
+                        </nav>
+                    </div>
+
+                    {/* Right side actions */}
+                    <div style={{
+                        display: 'flex',
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'flex-end',
+                        gap: '1rem',
+                    }}>
+                        {/* Cart */}
+                        <div style={{ position: 'relative', cursor: 'pointer' }}>
+                            <div style={{
+                                background: 'white',
+                                borderRadius: '9999px',
+                                padding: '0.5rem',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                minWidth: '2.75rem',
+                            }}>
+                                <ShoppingBasket size={22} color="var(--color-textColor)" />
+                            </div>
+                            <span style={{
+                                position: 'absolute',
+                                bottom: '2.5rem',
+                                right: '4px',
+                                fontSize: '0.75rem',
+                                fontWeight: 700,
+                                background: 'var(--color-solid)',
+                                color: 'white',
+                                borderRadius: '9999px',
+                                width: '1.125rem',
+                                height: '1.125rem',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}>0</span>
+                        </div>
+
+                        {/* Sign In */}
+                        <Link
+                            to="/login"
+                            style={{ display: 'none' }}
+                            className="desktop-signin"
+                        >
+                            <div className="btn-solid" style={{ padding: '0.5rem 1.25rem', fontSize: '0.875rem', borderRadius: '9999px' }}>
+                                Sign In
+                            </div>
+                        </Link>
+
+                        {/* Hamburger */}
+                        <button
+                            onClick={() => setMenuOpen(!menuOpen)}
+                            className="hamburger-btn"
+                            aria-label="Toggle menu"
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: '2.5rem',
+                                height: '2.5rem',
+                                background: 'white',
+                                borderRadius: '9999px',
+                                transition: 'all 0.2s',
+                            }}
+                        >
+                            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            {/* Mobile Menu Overlay */}
+            {menuOpen && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        zIndex: 40,
+                        backgroundColor: 'rgba(0,0,0,0.4)',
+                    }}
+                    onClick={() => setMenuOpen(false)}
+                />
+            )}
+
+            {/* Mobile Menu Drawer */}
+            <div
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    width: '280px',
+                    zIndex: 45,
+                    backgroundColor: 'var(--color-primary)',
+                    boxShadow: '-4px 0 20px rgba(0,0,0,0.15)',
+                    transform: menuOpen ? 'translateX(0)' : 'translateX(100%)',
+                    transition: 'transform 0.35s var(--ease-in-out)',
+                    padding: '5rem 2rem 2rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.5rem',
+                }}
+            >
+                <button
+                    onClick={() => setMenuOpen(false)}
+                    style={{
+                        position: 'absolute',
+                        top: '1rem',
+                        right: '1rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '2.5rem',
+                        height: '2.5rem',
+                        background: 'white',
+                        borderRadius: '9999px',
+                    }}
+                >
+                    <X size={20} />
+                </button>
+                {[
+                    { to: '/', label: 'Home' },
+                    { to: '/menu', label: 'Menu' },
+                    { to: '/reservation', label: 'Reservation' },
+                    { to: '/contact', label: 'Contact' },
+                ].map(({ to, label }) => (
+                    <NavLink
+                        key={to}
+                        to={to}
+                        end={to === '/'}
+                        onClick={() => setMenuOpen(false)}
+                        style={({ isActive }) => ({
+                            padding: '0.875rem 1rem',
+                            borderRadius: '0.75rem',
+                            fontSize: '1rem',
+                            fontWeight: 600,
+                            color: isActive ? 'var(--color-solid)' : 'var(--color-textColor)',
+                            backgroundColor: isActive ? 'rgba(220,88,62,0.08)' : 'transparent',
+                            transition: 'all 0.2s',
+                            display: 'block',
+                        })}
+                    >
+                        {label}
+                    </NavLink>
+                ))}
+                <div style={{ marginTop: '1.5rem' }}>
+                    <Link
+                        to="/login"
+                        onClick={() => setMenuOpen(false)}
+                        className="btn-solid"
+                        style={{ width: '100%', textAlign: 'center', display: 'block', padding: '0.875rem' }}
+                    >
+                        Sign In
+                    </Link>
                 </div>
             </div>
-        </nav>
+
+            <style>{`
+                @media (min-width: 1024px) {
+                    .desktop-nav { display: flex !important; gap: 0.25rem; }
+                    .desktop-signin { display: block !important; }
+                    .hamburger-btn { display: none !important; }
+                }
+            `}</style>
+        </>
     );
 };
 

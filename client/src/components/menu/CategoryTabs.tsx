@@ -13,28 +13,24 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     onSelectCategory
 }) => {
     return (
-        <div className="mb-5 border-bottom pb-3">
-            <ul className="nav nav-pills d-flex flex-nowrap overflow-auto" style={{ whiteSpace: 'nowrap', paddingBottom: '10px' }}>
-                <li className="nav-item">
-                    <button
-                        className={`nav-link custom-tab border-0 bg-transparent ${!selectedCategoryId ? 'active shadow-sm' : ''}`}
-                        onClick={() => onSelectCategory(undefined)}
-                    >
-                        🌟 All Items
-                    </button>
-                </li>
-
+        <div className="mb-4 overflow-auto pb-2">
+            <div className="nav nav-pills flex-nowrap gap-2">
+                <button
+                    className={`nav-link text-nowrap rounded-pill border-0 ${!selectedCategoryId ? 'active' : 'bg-white text-dark shadow-sm'}`}
+                    onClick={() => onSelectCategory(undefined)}
+                >
+                    All Menu
+                </button>
                 {categories.map((category) => (
-                    <li className="nav-item" key={category._id}>
-                        <button
-                            className={`nav-link custom-tab border-0 bg-transparent ${selectedCategoryId === category._id ? 'active shadow-sm' : ''}`}
-                            onClick={() => onSelectCategory(category._id)}
-                        >
-                            {category.name}
-                        </button>
-                    </li>
+                    <button
+                        key={category._id}
+                        className={`nav-link text-nowrap rounded-pill border-0 ${selectedCategoryId === category._id ? 'active' : 'bg-white text-dark shadow-sm'}`}
+                        onClick={() => onSelectCategory(category._id)}
+                    >
+                        {category.name}
+                    </button>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

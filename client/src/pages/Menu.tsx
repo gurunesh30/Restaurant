@@ -20,43 +20,27 @@ const Menu: React.FC = () => {
 
     return (
         <div className="container py-5">
-            {/* Page Header */}
-            <div className="text-center mb-5 mt-4">
-                <h1 className="fw-bold display-4 mb-3">
-                    Explore Our <span className="text-primary-custom">Menu</span>
-                </h1>
-                <p className="text-muted lead mx-auto" style={{ maxWidth: '700px' }}>
-                    Discover the authentic taste of Indian cuisine. Prepared fresh daily with the finest spices and traditional recipes passed down through generations.
-                </p>
-            </div>
+            <h1 className="fw-bold mb-4">Our Menu</h1>
 
             {/* Search Bar */}
-            <div className="row justify-content-center mb-5">
-                <div className="col-12 col-md-8 col-lg-6">
+            <div className="row mb-4">
+                <div className="col-md-6 mx-auto">
                     <form onSubmit={handleSearch}>
-                        <div className="input-group shadow-sm rounded-pill overflow-hidden bg-white p-1 border">
-                            <span className="input-group-text bg-transparent border-0 ps-4 text-muted">
-                                <i className="bi bi-search"></i>
-                            </span>
+                        <div className="input-group shadow-sm rounded-pill overflow-hidden border bg-white">
                             <input
                                 type="text"
-                                className="form-control border-0 shadow-none bg-transparent py-3"
-                                placeholder="Search for your favorite dish..."
+                                className="form-control border-0 shadow-none px-4"
+                                placeholder="Search dishes..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
-                            <button
-                                type="submit"
-                                className="btn btn-primary-custom rounded-pill px-4 m-1 fw-bold"
-                            >
-                                Search
-                            </button>
+                            <button type="submit" className="btn btn-primary px-4 fw-bold">Search</button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            {/* Category Tabs Section */}
+            {/* Categories */}
             {!categoriesLoading && categories.length > 0 && (
                 <CategoryTabs
                     categories={categories}
@@ -65,10 +49,8 @@ const Menu: React.FC = () => {
                 />
             )}
 
-            {/* Grid List */}
-            <div className="mt-4">
-                <MenuGrid items={items} loading={menuLoading} error={menuError} />
-            </div>
+            {/* Menu Grid */}
+            <MenuGrid items={items} loading={menuLoading} error={menuError} />
         </div>
     );
 };

@@ -26,10 +26,10 @@ const MenuGrid: React.FC<MenuGridProps> = ({ items, loading, error }) => {
     if (items.length === 0) {
         return (
             <div className="text-center py-5">
-                <h4 className="text-muted fw-light" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-                    No items found in this category.
+                <h4 className="text-muted fw-bold serif-font mb-3">
+                    Our selection is momentarily unavailable.
                 </h4>
-                <p className="text-muted small">Try selecting another category or check back later.</p>
+                <p className="text-muted small opacity-50">Please refine your search or explore other categories.</p>
             </div>
         );
     }

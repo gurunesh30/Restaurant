@@ -1,75 +1,161 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
 
 const Footer: React.FC = () => {
+    const [email, setEmail] = useState('');
+
     return (
-        <footer className="footer bg-dark text-white pt-5 pb-4 mt-auto">
-            <div className="container">
-                <div className="row gy-4">
-                    <div className="col-12 col-lg-4 pe-lg-5">
-                        <h4 className="fw-bold fs-4 mb-3">
-                            <i className="bi bi-fire text-primary-custom me-2"></i>
-                            <span>Indian</span><span className="text-primary-custom ms-1">Spice</span>
-                        </h4>
-                        <p className="text-secondary mb-4" style={{ lineHeight: 1.8 }}>
-                            Experience authentic Indian flavors crafted with passion and traditional spices. Order online, reserve a table, and enjoy the culinary journey.
+        <footer style={{ paddingTop: '4rem', paddingBottom: 0, background: 'var(--color-primary)' }}>
+            <div className="padd-container">
+                {/* Main Footer Grid */}
+                <div style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between',
+                    gap: '3rem',
+                }}>
+                    {/* Brand Column */}
+                    <div style={{ maxWidth: '20rem' }}>
+                        <Link to="/" style={{ display: 'flex', alignItems: 'flex-end' }}>
+                            <img
+                                alt="logoImg"
+                                style={{ height: '3rem' }}
+                                src="/FoodieFiesta_files/logo-hvC0bAJS.svg"
+                            />
+                            <div>
+                                <span style={{
+                                    display: 'block',
+                                    fontWeight: 800,
+                                    fontSize: '1.875rem',
+                                    position: 'relative',
+                                    top: '4px',
+                                    left: '4px',
+                                }}>Foodie</span>
+                                <span style={{
+                                    display: 'block',
+                                    fontWeight: 800,
+                                    fontSize: '0.75rem',
+                                    position: 'relative',
+                                    left: '6px',
+                                    letterSpacing: '10px',
+                                    textTransform: 'uppercase',
+                                    color: 'var(--color-solid)',
+                                }}>Fiesta</span>
+                            </div>
+                        </Link>
+                        <p style={{ marginTop: '1.25rem', fontSize: '0.875rem' }}>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            Lorem Ipsum has been the industry's standard dummy text
                         </p>
-                        <div className="d-flex gap-3">
-                            <a href="#" className="btn btn-outline-secondary rounded-circle btn-sm d-flex justify-content-center align-items-center" style={{ width: '36px', height: '36px' }}>
-                                <i className="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" className="btn btn-outline-secondary rounded-circle btn-sm d-flex justify-content-center align-items-center" style={{ width: '36px', height: '36px' }}>
-                                <i className="bi bi-instagram"></i>
-                            </a>
-                            <a href="#" className="btn btn-outline-secondary rounded-circle btn-sm d-flex justify-content-center align-items-center" style={{ width: '36px', height: '36px' }}>
-                                <i className="bi bi-twitter-x"></i>
-                            </a>
+                        {/* Social icons */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '1.75rem' }}>
+                            {[Facebook, Instagram, Twitter, Linkedin].map((Icon, i) => (
+                                <a
+                                    key={i}
+                                    href="#"
+                                    style={{ color: 'var(--color-gray-500)', transition: 'color 0.2s' }}
+                                    onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-solid)')}
+                                    onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-gray-500)')}
+                                >
+                                    <Icon size={22} />
+                                </a>
+                            ))}
                         </div>
                     </div>
 
-                    <div className="col-12 col-md-4 col-lg-2">
-                        <h5 className="fw-bold mb-3">Quick Links</h5>
-                        <ul className="list-unstyled d-flex flex-column gap-2 text-secondary">
-                            <li><Link to="/home" className="text-secondary text-decoration-none nav-link p-0 hover-link">Home</Link></li>
-                            <li><Link to="/menu" className="text-secondary text-decoration-none nav-link p-0 hover-link">Our Menu</Link></li>
-                            <li><Link to="/reservation" className="text-secondary text-decoration-none nav-link p-0 hover-link">Book a Table</Link></li>
-                            <li><Link to="/contact" className="text-secondary text-decoration-none nav-link p-0 hover-link">Contact Us</Link></li>
+                    {/* Company Links */}
+                    <div>
+                        <h4 style={{ color: 'var(--color-textColor)' }}>COMPANY</h4>
+                        <ul style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem' }}>
+                            {['About', 'Careers', 'Press', 'Blog', 'Partners'].map(item => (
+                                <li key={item}>
+                                    <a
+                                        href="#"
+                                        style={{ color: 'var(--color-gray-50)', transition: 'color 0.2s' }}
+                                        onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-solid)')}
+                                        onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-gray-50)')}
+                                    >{item}</a>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
-                    <div className="col-12 col-md-8 col-lg-6">
-                        <div className="row">
-                            <div className="col-12 col-sm-6 mb-4 mb-sm-0">
-                                <h5 className="fw-bold mb-3">Operating Hours</h5>
-                                <ul className="list-unstyled text-secondary">
-                                    <li className="mb-2"><strong>Mon - Fri:</strong><br />11:00 AM - 10:00 PM</li>
-                                    <li><strong>Sat - Sun:</strong><br />10:00 AM - 11:00 PM</li>
-                                </ul>
-                            </div>
-                            <div className="col-12 col-sm-6">
-                                <h5 className="fw-bold mb-3">Contact Info</h5>
-                                <ul className="list-unstyled text-secondary">
-                                    <li className="mb-2 d-flex">
-                                        <i className="bi bi-geo-alt-fill text-primary-custom me-2 mt-1"></i>
-                                        <span>123 Spice Avenue, Downtown, Food City, FC 90001</span>
-                                    </li>
-                                    <li className="mb-2 d-flex align-items-center">
-                                        <i className="bi bi-telephone-fill text-primary-custom me-2"></i>
-                                        <span>+1 (555) 123-4567</span>
-                                    </li>
-                                    <li className="d-flex align-items-center">
-                                        <i className="bi bi-envelope-fill text-primary-custom me-2"></i>
-                                        <span>contact@indianspice.com</span>
-                                    </li>
-                                </ul>
-                            </div>
+                    {/* Support Links */}
+                    <div>
+                        <h4 style={{ color: 'var(--color-textColor)' }}>SUPPORT</h4>
+                        <ul style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem' }}>
+                            {['Help Center', 'Safety Information', 'Cancellation Options', 'Contact Us', 'Accessibility'].map(item => (
+                                <li key={item}>
+                                    <a
+                                        href="#"
+                                        style={{ color: 'var(--color-gray-50)', transition: 'color 0.2s' }}
+                                        onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-solid)')}
+                                        onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-gray-50)')}
+                                    >{item}</a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Newsletter */}
+                    <div style={{ maxWidth: '20rem' }}>
+                        <h4 style={{ color: 'var(--color-textColor)' }}>STAY UPDATED</h4>
+                        <p style={{ marginTop: '0.75rem', fontSize: '0.875rem' }}>
+                            Subscribe to our newsletter for inspiration and special offers.
+                        </p>
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            border: '1px solid rgba(107,114,128,0.3)',
+                            paddingLeft: '1rem',
+                            gap: '0.5rem',
+                            backgroundColor: 'rgba(220,88,62,0.07)',
+                            height: '46px',
+                            borderRadius: '9999px',
+                            overflow: 'hidden',
+                            maxWidth: '28rem',
+                            width: '100%',
+                            marginTop: '1.5rem',
+                        }}>
+                            <input
+                                type="email"
+                                placeholder="Your email"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                                style={{
+                                    flex: 1,
+                                    height: '100%',
+                                    background: 'transparent',
+                                    outline: 'none',
+                                    fontSize: '0.875rem',
+                                    color: 'var(--color-gray-500)',
+                                }}
+                            />
+                            <button className="btn-solid" style={{ borderRadius: '9999px', padding: '0.5rem 0.875rem', marginRight: '2px', fontSize: '0.875rem' }}>
+                                Subscribe
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <div className="row mt-5 pt-4 border-top border-secondary text-center text-secondary small">
-                    <div className="col-12">
-                        <p className="mb-0">&copy; {new Date().getFullYear()} Indian Spice Restaurant. All Rights Reserved.</p>
+                {/* Divider & Bottom Bar */}
+                <hr style={{ borderColor: 'var(--color-gray-300)', marginTop: '2rem' }} />
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.5rem',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '1.25rem 0',
+                }}>
+                    <div style={{ display: 'flex', width: '100%', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem' }}>
+                        <p>© {new Date().getFullYear()} <a href="/" style={{ color: 'inherit' }}>FoodieFiesta</a>. All rights reserved.</p>
+                        <ul style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.875rem' }}>
+                            {['Privacy', 'Terms', 'Sitemap'].map(item => (
+                                <li key={item}><a href="#" style={{ color: 'var(--color-gray-50)' }}>{item}</a></li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
             </div>
