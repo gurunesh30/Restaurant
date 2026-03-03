@@ -174,8 +174,20 @@ export const updateMenuItem = async (req: Request, res: Response): Promise<void>
         const updatedItem = await item.save();
         res.status(200).json({ success: true, data: updatedItem });
     } catch (error: any) {
-        res.status(500).json({ success: false, message: "Failed to update menu item", error: error.message });
-    }
+    console.error("================ ERROR DETECTED ================");
+    console.log("Type of error:", typeof error);
+    console.log("Message:", error.message);
+    
+    // This will force the object to reveal itself even if it's a circular structure
+    console.dir(error, { depth: null }); 
+    
+    res.status(500).json({ 
+        success: false, 
+        message: "Check your terminal for the detailed crash log", 
+        error: error.message || "Unknown error"
+    });
+    console.error("Raw error:", JSON.stringify(error, Object.getOwnPropertyNames(error)));
+}
 };
 
 // @desc    Delete menu item
