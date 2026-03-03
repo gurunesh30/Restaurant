@@ -22,9 +22,9 @@ Callback URL for Google OAuth flow.
 - **Route:** `GET /auth/google/callback`
 - **Access:** Public
 - **Request:** Google OAuth params in URL
-- **Response:** Redirects to `<FRONTEND_URL>/login-success?token=<jwt_token>`
+- **Response:** Redirects to `<FRONTEND_URL>/login-success` after setting an HttpOnly, Secure auth cookie.
 
-### 3. Get Current User Profille
+### 3. Get Current User Profile
 - **Route:** `GET /auth/me`
 - **Access:** Private (User)
 - **Request Headers:**

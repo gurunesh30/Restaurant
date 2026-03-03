@@ -4,12 +4,17 @@ import dotenv from "dotenv";
 import { User } from "../models/User.js";
 dotenv.config();
 
+const callbackURL = process.env.GOOGLE_CALLBACK_URL;
+if (!callbackURL || !/^https?:\/\//.test(callbackURL)) {
+    throw new Error("GOOGLE_CALLBACK_URL must be an absolute URL");
+}
+
 passport.use(
     new GoogleStrategy(
         {
             clientID: process.env.GOOGLE_CLIENT_ID || "",
             clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-            callbackURL: process.env.GOOGLE_CALLBACK_URL || "/api/auth/google/callback",
+            callbackURL: callbackURL,
         },
         async (_accessToken, _refreshToken, profile, done) => {
             try {

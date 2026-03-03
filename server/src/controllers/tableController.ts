@@ -69,7 +69,14 @@ export const updateTable = async (req: Request, res: Response): Promise<void> =>
         if (shape) table.shape = shape;
         if (position) table.position = position;
         if (floor) table.floor = floor;
-        if (status) table.status = status;
+        if (status !== undefined) {
+            const allowedStatuses = ["available", "booked", "unavailable"];
+            if (!allowedStatuses.includes(status)) {
+                res.status(400).json({ success: false, message: "Invalid status" });
+                return;
+            }
+            table.status = status;
+        }
 
         const updatedTable = await table.save();
         res.status(200).json({ success: true, data: updatedTable });
