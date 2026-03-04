@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Star, ChevronLeft, ChevronRight, Truck, ShieldCheck, PhoneCall, ShoppingBasket } from 'lucide-react';
+import {
+    Star, ChevronLeft, ChevronRight, Truck,
+    ShieldCheck, PhoneCall
+} from 'lucide-react';
 import type { MenuItem } from '../types/menu.types';
+import MenuItemCard from '../components/common/MenuItemCard';
 
 /* ────────────────────────────────────────────────────────
    STATIC DATA
@@ -69,9 +73,6 @@ const REVIEWS = [
     },
 ];
 
-/* ────────────────────────────────────────────────────────
-   STAR RATING COMPONENT
-──────────────────────────────────────────────────────── */
 const StarRating: React.FC<{ rating?: number; size?: number; color?: string }> = ({ rating = 5, size = 16, color = '#fdc700' }) => {
     const full = Math.floor(rating);
     return (
@@ -84,197 +85,37 @@ const StarRating: React.FC<{ rating?: number; size?: number; color?: string }> =
 };
 
 /* ────────────────────────────────────────────────────────
-   PRODUCT CARD (Top Picks / Trending cards)
+   MAPPED DATA FOR SHARED COMPONENT
 ──────────────────────────────────────────────────────── */
-interface ProductCardProps {
-    name: string;
-    category: string;
-    price: string;
-    rating: number;
-    prep: string;
-    cook: string;
-    img: string;
-    description?: string;
-}
+const MAPPED_TRENDING: MenuItem[] = TRENDING_SLIDES.map(slide => ({
+    _id: slide.id,
+    name: slide.title,
+    description: slide.description,
+    price: parseFloat(slide.price.replace('₹', '')),
+    category: slide.category,
+    image: { url: slide.img, public_id: '' },
+    isVeg: slide.id === 't1' || slide.id === 't2' ? false : true,
+    isTrending: true,
+    rating: 4.7,
+    available: true,
+    createdAt: new Date().toISOString()
+}));
 
-const ProductCard: React.FC<ProductCardProps> = ({ name, category, price, rating, prep, cook, img, description }) => {
-    const [hovered, setHovered] = useState(false);
-    return (
-        <div
-            style={{ position: 'relative', marginTop: '6rem' }}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-        >
-            {/* Circular img */}
-            <div style={{
-                position: 'absolute',
-                left: 0, right: 0,
-                top: '-5.25rem',
-                height: '177px',
-                width: '177px',
-                margin: '0 auto',
-                borderRadius: '9999px',
-            }}>
-                <img
-                    src={img}
-                    alt={name}
-                    style={{
-                        position: 'absolute',
-                        inset: 0,
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        borderRadius: '9999px',
-                        transition: 'opacity 0.3s, transform 0.3s',
-                        opacity: hovered ? 0.85 : 1,
-                        transform: hovered ? 'scale(1.06)' : 'scale(1)',
-                        filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.2))',
-                    }}
-                />
-            </div>
+const MAPPED_PICKS: MenuItem[] = TOP_PICKS.map(pick => ({
+    _id: pick.id,
+    name: pick.name,
+    description: "Chef's special preparation with authentic spices.",
+    price: parseFloat(pick.price.replace('₹', '')),
+    category: pick.category,
+    image: { url: pick.img, public_id: '' },
+    isVeg: pick.name.toLowerCase().includes('chicken') || pick.name.toLowerCase().includes('beef') || pick.name.toLowerCase().includes('lamb') || pick.name.toLowerCase().includes('fish') || pick.name.toLowerCase().includes('egg') || pick.name.toLowerCase().includes('pepperoni') ? false : true,
+    isTrending: false,
+    rating: pick.rating,
+    available: true,
+    createdAt: new Date().toISOString()
+}));
 
-            {/* Card body */}
-            <div style={{
-                borderRadius: '2rem',
-                background: 'var(--color-primary)',
-                paddingTop: '5rem',
-                overflow: 'hidden',
-                boxShadow: hovered ? '0 8px 30px rgba(220,88,62,0.15)' : '0 2px 12px rgba(0,0,0,0.06)',
-                transition: 'box-shadow 0.3s ease',
-                border: '1px solid rgba(220,88,62,0.08)',
-            }}>
-                <div style={{ padding: '0.75rem' }}>
-                    <h4 style={{
-                        fontSize: '1.125rem',
-                        overflow: 'hidden',
-                        display: '-webkit-box',
-                        WebkitLineClamp: 1,
-                        WebkitBoxOrient: 'vertical',
-                        marginBottom: '0.25rem',
-                    }}>{name}</h4>
-                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', paddingBottom: '0.25rem' }}>
-                        <h5 style={{ marginBottom: '0.25rem' }}>{category}</h5>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-                            <StarRating rating={rating} size={14} />
-                            <h5>{rating.toFixed(1)}</h5>
-                        </div>
-                    </div>
-                    {description && (
-                        <p style={{ overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical' as const }}>
-                            {description}
-                        </p>
-                    )}
-                </div>
-
-                {/* Price row */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 0.75rem 0.5rem' }}>
-                    <div style={{ display: 'flex', gap: '0.25rem' }}>
-                        <button className="btn-light" style={{ borderRadius: '0.25rem', height: '1.5rem', width: '1.5rem', padding: '0.5rem', fontSize: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>H</button>
-                        <button className="btn-outline" style={{ borderRadius: '0.25rem', height: '1.5rem', width: '1.5rem', padding: '0.5rem', fontSize: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>F</button>
-                    </div>
-                    <h4 style={{ color: 'var(--color-solidOne)' }}>{price}</h4>
-                </div>
-
-                {/* Footer row */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '0.75rem', paddingLeft: '1.25rem', fontSize: '13px', fontWeight: 600 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', position: 'relative', bottom: '0.375rem' }}>
-                            <h5>Prep</h5>
-                            <p style={{ fontSize: '0.75rem' }}>{prep}</p>
-                        </div>
-                        <div style={{ height: '2rem', width: '1px', background: 'rgba(217,89,66,0.1)', border: 'none' }} />
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', position: 'relative', bottom: '0.375rem' }}>
-                            <h5>Cook</h5>
-                            <p style={{ fontSize: '0.75rem' }}>{cook}</p>
-                        </div>
-                    </div>
-                    <div>
-                        <button className="btn-solid" style={{ borderRadius: '0.25rem', padding: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <ShoppingBasket size={18} color="white" strokeWidth={1.5} />
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-/* ────────────────────────────────────────────────────────
-   MENU ITEM CARD (DB items)
-──────────────────────────────────────────────────────── */
-const MenuItemCard: React.FC<{ item: MenuItem }> = ({ item }) => {
-    const [hovered, setHovered] = useState(false);
-    return (
-        <div
-            style={{ position: 'relative', marginTop: '6rem' }}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-        >
-            <div style={{
-                position: 'absolute',
-                left: 0, right: 0,
-                top: '-5.25rem',
-                height: '177px',
-                width: '177px',
-                margin: '0 auto',
-                borderRadius: '9999px',
-            }}>
-                <img
-                    src={item.image?.url}
-                    alt={item.name}
-                    style={{
-                        position: 'absolute',
-                        inset: 0,
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        borderRadius: '9999px',
-                        transition: 'transform 0.3s',
-                        transform: hovered ? 'scale(1.06)' : 'scale(1)',
-                        filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.2))',
-                    }}
-                />
-            </div>
-            <div style={{
-                borderRadius: '2rem',
-                background: 'var(--color-primary)',
-                paddingTop: '5rem',
-                overflow: 'hidden',
-                boxShadow: hovered ? '0 8px 30px rgba(220,88,62,0.15)' : '0 2px 12px rgba(0,0,0,0.06)',
-                transition: 'box-shadow 0.3s ease',
-                border: '1px solid rgba(220,88,62,0.08)',
-            }}>
-                <div style={{ padding: '0.75rem' }}>
-                    <h4 style={{ fontSize: '1.125rem', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', marginBottom: '0.25rem' }}>{item.name}</h4>
-                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', paddingBottom: '0.25rem' }}>
-                        <h5 style={{ marginBottom: '0.25rem' }}>{typeof item.category === 'string' ? item.category : (item.category as any)?.name}</h5>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-                            <StarRating rating={item.rating || 5} size={14} />
-                            <h5>{(item.rating || 5).toFixed(1)}</h5>
-                        </div>
-                    </div>
-                    <p style={{ overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical' as const }}>{item.description}</p>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 0.75rem 0.5rem' }}>
-                    <span style={{
-                        background: item.isVeg ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)',
-                        color: item.isVeg ? 'var(--color-green-500)' : 'var(--color-red-500)',
-                        padding: '0.125rem 0.5rem',
-                        borderRadius: '0.25rem',
-                        fontSize: '0.75rem',
-                        fontWeight: 600,
-                    }}>{item.isVeg ? 'Veg' : 'Non-Veg'}</span>
-                    <h4 style={{ color: 'var(--color-solidOne)' }}>₹{item.price.toFixed(2)}</h4>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '0 0.75rem 0.75rem' }}>
-                    <button className="btn-solid" style={{ borderRadius: '0.25rem', padding: '0.5rem 0.875rem', fontSize: '0.8125rem' }}>
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
-};
+// ProductCard and MenuItemCard removed in favor of common MenuItemCard component
 
 /* ────────────────────────────────────────────────────────
    HOME PAGE
@@ -295,7 +136,7 @@ const Home: React.FC = () => {
     const startHeroInterval = () => {
         if (heroIntervalRef.current) clearInterval(heroIntervalRef.current);
         heroIntervalRef.current = setInterval(() => {
-            setHeroIdx(prev => (prev + 1) % TRENDING_SLIDES.length);
+            setHeroIdx((prev: number) => (prev + 1) % TRENDING_SLIDES.length);
         }, 5000);
     };
 
@@ -322,7 +163,7 @@ const Home: React.FC = () => {
         fetch();
     }, []);
 
-    const visiblePicks = TOP_PICKS.slice(picksPage * picksPerPage, (picksPage + 1) * picksPerPage);
+    const visiblePicks = MAPPED_PICKS.slice(picksPage * picksPerPage, (picksPage + 1) * picksPerPage);
 
     return (
         <main style={{ overflowX: 'hidden', color: 'var(--color-textColor)' }}>
@@ -596,29 +437,22 @@ const Home: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Trending item cards below slider */}
                     <div style={{
-                        marginTop: '7rem',
+                        marginTop: '3.5rem',
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))',
-                        gap: '1.5rem',
+                        gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+                        gap: '2rem',
                     }}>
-                        {TRENDING_SLIDES.map(slide => (
-                            <ProductCard
-                                key={slide.id}
-                                name={slide.title}
-                                category={slide.category}
-                                price={slide.price}
-                                rating={4.7}
-                                prep="5m"
-                                cook="15m"
-                                img={slide.img}
-                                description={slide.description}
+                        {MAPPED_TRENDING.map((item: MenuItem, idx: number) => (
+                            <MenuItemCard
+                                key={item._id}
+                                item={item}
+                                index={idx}
                             />
                         ))}
                         {/* Also show DB trending items if available */}
-                        {trendingItems.map(item => (
-                            <MenuItemCard key={item._id} item={item} />
+                        {trendingItems.map((item: MenuItem, idx: number) => (
+                            <MenuItemCard key={item._id} item={item} index={MAPPED_TRENDING.length + idx} />
                         ))}
                     </div>
                 </div>
@@ -639,23 +473,17 @@ const Home: React.FC = () => {
                         </p>
                     </div>
 
-                    {/* Cards (5-per-view) */}
                     <div style={{
-                        marginTop: '7rem',
+                        marginTop: '3.5rem',
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))',
-                        gap: '1.5rem',
+                        gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+                        gap: '2rem',
                     }}>
-                        {visiblePicks.map(pick => (
-                            <ProductCard
-                                key={pick.id}
-                                name={pick.name}
-                                category={pick.category}
-                                price={pick.price}
-                                rating={pick.rating}
-                                prep={pick.prep}
-                                cook={pick.cook}
-                                img={pick.img}
+                        {visiblePicks.map((pick: MenuItem, idx: number) => (
+                            <MenuItemCard
+                                key={pick._id}
+                                item={pick}
+                                index={idx}
                             />
                         ))}
                     </div>
@@ -663,7 +491,7 @@ const Home: React.FC = () => {
                     {/* Pagination controls */}
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.75rem', marginTop: '2.5rem' }}>
                         <button
-                            onClick={() => setPicksPage(p => Math.max(0, p - 1))}
+                            onClick={() => setPicksPage((p: number) => Math.max(0, p - 1))}
                             disabled={picksPage === 0}
                             style={{
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -688,7 +516,7 @@ const Home: React.FC = () => {
                             />
                         ))}
                         <button
-                            onClick={() => setPicksPage(p => Math.min(totalPicksPages - 1, p + 1))}
+                            onClick={() => setPicksPage((p: number) => Math.min(totalPicksPages - 1, p + 1))}
                             disabled={picksPage === totalPicksPages - 1}
                             style={{
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
