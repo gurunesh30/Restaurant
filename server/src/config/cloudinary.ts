@@ -1,19 +1,11 @@
 import { v2 as cloudinary } from 'cloudinary';
-import cloudinaryStorage from 'multer-storage-cloudinary';
+// Import the whole package as a default object first
+import multerStorage from 'multer-storage-cloudinary';
 import dotenv from 'dotenv';
 
 dotenv.config();
-const requiredEnv = [
-  'CLOUDINARY_CLOUD_NAME',
-  'CLOUDINARY_API_KEY',
-  'CLOUDINARY_API_SECRET',
-] as const;
 
-for (const key of requiredEnv) {
-  if (!process.env[key]) {
-    throw new Error(`Missing required environment variable: ${key}`);
-  }
-}
+const { CloudinaryStorage } = multerStorage as any;
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
@@ -21,13 +13,14 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET!,
 });
 
-export const storage = cloudinaryStorage({
+export const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  folder: 'restaurant_assets',
-  allowedFormats: ['jpg', 'png', 'jpeg', 'webp'],
-  filename: function (_req: any, file: any, cb: any) {
-    cb(undefined, `${Date.now()}-${file.originalname.split('.')[0]}`);
-  }
+  params: {
+    folder: 'restaurant_assets',
+    // In v4 + Cloudinary v2, use allowed_formats (underscore)
+    allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+    public_id: (_req: any, file: any) => `${Date.now()}-${file.originalname.split('.')[0]}`,
+  },
 });
 
 export default cloudinary;

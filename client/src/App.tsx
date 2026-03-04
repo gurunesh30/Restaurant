@@ -20,6 +20,10 @@ import Contact from './pages/Contact';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import LoginSuccess from './pages/LoginSuccess';
+import Profile from './pages/Profile';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminMenu from './pages/admin/AdminMenu';
+import AdminReservations from './pages/admin/AdminReservations';
 import NotFound from './pages/NotFound';
 
 const App: React.FC = () => {
@@ -39,16 +43,17 @@ const App: React.FC = () => {
                             <Route path="/contact" element={<Contact />} />
                             <Route path="/checkout" element={<Checkout />} />
                             <Route path="/login" element={<Login />} />
+                            <Route path="/profile" element={<Profile />} />
                             {/* Google OAuth redirect landing */}
                             <Route path="/login-success" element={<LoginSuccess />} />
                         </Route>
 
                         {/* Admin Routes with AdminLayout */}
                         <Route path="/admin" element={<AdminLayout />}>
-                            <Route index element={<div>Admin Dashboard Placeholder</div>} />
-                            <Route path="dashboard" element={<div>Admin Dashboard Placeholder</div>} />
-                            <Route path="menu" element={<div>Admin Menu Placeholder</div>} />
-                            <Route path="bookings" element={<div>Admin Bookings Placeholder</div>} />
+                            <Route index element={<AdminDashboard />} />
+                            <Route path="dashboard" element={<AdminDashboard />} />
+                            <Route path="menu" element={<AdminMenu />} />
+                            <Route path="reservations" element={<AdminReservations />} />
                         </Route>
 
                         {/* 404 Route */}

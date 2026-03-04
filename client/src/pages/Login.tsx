@@ -50,7 +50,7 @@ const InputRow: React.FC<{
    LOGIN PAGE
 ══════════════════════════════════════════════════ */
 const Login: React.FC = () => {
-    const { login, register, loginWithToken, isLoggedIn } = useAuth();
+    const { login, register, loginWithToken, isLoggedIn, isAdmin } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams] = useSearchParams();
@@ -77,10 +77,10 @@ const Login: React.FC = () => {
         });
     }, []); // only run once on mount
 
-    // Already logged in
+    // Already logged in → admins go to admin panel, others go to their intended destination
     useEffect(() => {
-        if (isLoggedIn) navigate(from, { replace: true });
-    }, [isLoggedIn]);
+        if (isLoggedIn) navigate(isAdmin ? '/admin/dashboard' : from, { replace: true });
+    }, [isLoggedIn, isAdmin]);
 
     const set = (k: string, v: string) => {
         setForm(p => ({ ...p, [k]: v }));
@@ -111,7 +111,11 @@ const Login: React.FC = () => {
                 await register(form.name, form.email, form.password);
             }
             setSuccess(true);
-            setTimeout(() => navigate(from, { replace: true }), 1200);
+            // Give the context a tick to update user state, then check role
+            setTimeout(() => {
+                // useAuth values won't be updated yet in this closure;
+                // navigate via the isLoggedIn effect above instead
+            }, 0);
         } catch (err: any) {
             setApiErr(err?.response?.data?.message || 'Something went wrong. Please try again.');
         } finally {

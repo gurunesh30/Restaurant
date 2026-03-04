@@ -6,6 +6,7 @@ import {
     LogIn, CheckCircle2, Tag, ArrowLeft,
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 /* ── Order type ── */
 type OrderType = 'delivery' | 'takeaway' | 'dine_in';
@@ -37,14 +38,12 @@ const BillRow: React.FC<{ label: string; value: string; bold?: boolean; accent?:
 ══════════════════════════════════════════════════ */
 const Checkout: React.FC = () => {
     const { cartItems, subtotal, updateQuantity, removeFromCart, clearCart } = useCart();
+    const { isLoggedIn, user } = useAuth();
     const navigate = useNavigate();
-
-    /* Pretend auth — swap this for real auth context when you wire it up */
-    const [isLoggedIn] = useState(false); // TODO: replace with real auth
 
     const [orderType, setOrderType] = useState<OrderType>('delivery');
     const [form, setForm] = useState({
-        name: '', phone: '', address: '', tableNumber: '',
+        name: user?.name ?? '', phone: '', address: '', tableNumber: '',
     });
     const [formErrors, setFormErrors] = useState<Record<string, string>>({});
     const [placing, setPlacing] = useState(false);
