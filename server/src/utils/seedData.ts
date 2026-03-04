@@ -6,35 +6,53 @@ import type mongoose from "mongoose";
 
 dotenv.config();
 
+// All image URLs use Wikimedia Commons Special:FilePath redirects.
+// These are freely licensed (CC BY-SA) and resolve to upload.wikimedia.org.
+
 const indianCategories = [
     {
         name: "Starters",
         slug: "starters",
-        image: { url: "https://example.com/starters.jpg", public_id: "starters_img" },
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Paneer_Tikka_Kabab.JPG",
+            public_id: "starters_img",
+        },
         sortOrder: 1,
     },
     {
         name: "Main Course",
         slug: "main-course",
-        image: { url: "https://example.com/main.jpg", public_id: "main_img" },
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Chicken_makhani.jpg",
+            public_id: "main_img",
+        },
         sortOrder: 2,
     },
     {
         name: "Breads",
         slug: "breads",
-        image: { url: "https://example.com/breads.jpg", public_id: "breads_img" },
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Butter_Naan.jpg",
+            public_id: "breads_img",
+        },
         sortOrder: 3,
     },
     {
         name: "Desserts",
         slug: "desserts",
-        image: { url: "https://example.com/desserts.jpg", public_id: "desserts_img" },
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Gulab_jamun_(Gibraltar%2C_November_2020).jpg",
+            public_id: "desserts_img",
+        },
         sortOrder: 4,
     },
     {
         name: "Beverages",
         slug: "beverages",
-        image: { url: "https://example.com/beverages.jpg", public_id: "beverages_img" },
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Mango_lassi.jpg",
+            public_id: "beverages_img",
+        },
         sortOrder: 5,
     },
 ];
@@ -50,7 +68,10 @@ const indianMenuItems = [
         rating: 4.5,
         available: true,
         categorySlug: "starters",
-        image: { url: "https://example.com/paneer-tikka.jpg", public_id: "paneer-tikka_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Paneer_Tikka_Kabab.JPG",
+            public_id: "paneer-tikka_img",
+        },
     },
     {
         name: "Chicken Tikka",
@@ -61,7 +82,10 @@ const indianMenuItems = [
         rating: 4.6,
         available: true,
         categorySlug: "starters",
-        image: { url: "https://example.com/chicken-tikka.jpg", public_id: "chicken-tikka_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Awadhi_chicken_tikka.jpg",
+            public_id: "chicken-tikka_img",
+        },
     },
     {
         name: "Vegetable Samosa",
@@ -72,7 +96,10 @@ const indianMenuItems = [
         rating: 4.2,
         available: true,
         categorySlug: "starters",
-        image: { url: "https://example.com/samosa.jpg", public_id: "samosa_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Samosas_and_pakoras_in_Jaipur%2C_India.jpg",
+            public_id: "samosa_img",
+        },
     },
     {
         name: "Aloo Tikki",
@@ -83,7 +110,10 @@ const indianMenuItems = [
         rating: 4.3,
         available: true,
         categorySlug: "starters",
-        image: { url: "https://example.com/aloo-tikki.jpg", public_id: "aloo-tikki_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Aloo_Tikki_-_Homemade_-_Assam_-_DSC_002.jpg",
+            public_id: "aloo-tikki_img",
+        },
     },
     {
         name: "Fish Amritsari",
@@ -94,7 +124,10 @@ const indianMenuItems = [
         rating: 4.4,
         available: true,
         categorySlug: "starters",
-        image: { url: "https://example.com/fish-amritsari.jpg", public_id: "fish-amritsari_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Amritsari_fish.jpg",
+            public_id: "fish-amritsari_img",
+        },
     },
     {
         name: "Hara Bhara Kabab",
@@ -105,7 +138,10 @@ const indianMenuItems = [
         rating: 4.1,
         available: true,
         categorySlug: "starters",
-        image: { url: "https://example.com/hara-bhara.jpg", public_id: "hara-bhara_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Hara_Bhara_Kabab.jpg",
+            public_id: "hara-bhara_img",
+        },
     },
 
     // Main Course
@@ -118,7 +154,10 @@ const indianMenuItems = [
         rating: 4.8,
         available: true,
         categorySlug: "main-course",
-        image: { url: "https://example.com/butter-chicken.jpg", public_id: "butter-chicken_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Chicken_makhani.jpg",
+            public_id: "butter-chicken_img",
+        },
     },
     {
         name: "Palak Paneer",
@@ -129,7 +168,10 @@ const indianMenuItems = [
         rating: 4.6,
         available: true,
         categorySlug: "main-course",
-        image: { url: "https://example.com/palak-paneer.jpg", public_id: "palak-paneer_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Cottage_cheese_in_spinach_gravy(palak_paneer).jpg",
+            public_id: "palak-paneer_img",
+        },
     },
     {
         name: "Dal Makhani",
@@ -140,7 +182,10 @@ const indianMenuItems = [
         rating: 4.7,
         available: true,
         categorySlug: "main-course",
-        image: { url: "https://example.com/dal-makhani.jpg", public_id: "dal-makhani_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Dal_makhani_(1).jpg",
+            public_id: "dal-makhani_img",
+        },
     },
     {
         name: "Chicken Biryani",
@@ -151,7 +196,10 @@ const indianMenuItems = [
         rating: 4.9,
         available: true,
         categorySlug: "main-course",
-        image: { url: "https://example.com/chicken-biryani.jpg", public_id: "chicken-biryani_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Spicy_Chicken_Biryani.JPG",
+            public_id: "chicken-biryani_img",
+        },
     },
     {
         name: "Mutton Rogan Josh",
@@ -162,7 +210,10 @@ const indianMenuItems = [
         rating: 4.7,
         available: true,
         categorySlug: "main-course",
-        image: { url: "https://example.com/rogan-josh.jpg", public_id: "rogan-josh_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Rogan_Josh.jpg",
+            public_id: "rogan-josh_img",
+        },
     },
     {
         name: "Paneer Butter Masala",
@@ -173,7 +224,10 @@ const indianMenuItems = [
         rating: 4.6,
         available: true,
         categorySlug: "main-course",
-        image: { url: "https://example.com/paneer-butter-masala.jpg", public_id: "pbm_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/An_aesthetic_Panner_Butter_Masala.jpg",
+            public_id: "pbm_img",
+        },
     },
     {
         name: "Chana Masala",
@@ -184,7 +238,10 @@ const indianMenuItems = [
         rating: 4.3,
         available: true,
         categorySlug: "main-course",
-        image: { url: "https://example.com/chana-masala.jpg", public_id: "chana-masala_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Chole_(Chana_masala).jpg",
+            public_id: "chana-masala_img",
+        },
     },
     {
         name: "Vegetable Biryani",
@@ -195,7 +252,10 @@ const indianMenuItems = [
         rating: 4.4,
         available: true,
         categorySlug: "main-course",
-        image: { url: "https://example.com/veg-biryani.jpg", public_id: "veg-biryani_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Awadhi_Vegetable_Biryani.jpg",
+            public_id: "veg-biryani_img",
+        },
     },
     {
         name: "Fish Curry",
@@ -206,7 +266,10 @@ const indianMenuItems = [
         rating: 4.5,
         available: true,
         categorySlug: "main-course",
-        image: { url: "https://example.com/fish-curry.jpg", public_id: "fish-curry_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Naan_with_fish_curry_avadhi_cuisine.jpg",
+            public_id: "fish-curry_img",
+        },
     },
     {
         name: "Kadhai Paneer",
@@ -217,7 +280,10 @@ const indianMenuItems = [
         rating: 4.5,
         available: true,
         categorySlug: "main-course",
-        image: { url: "https://example.com/kadhai-paneer.jpg", public_id: "kadhai-paneer_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Kadai_paneer.jpg",
+            public_id: "kadhai-paneer_img",
+        },
     },
 
     // Breads
@@ -230,7 +296,10 @@ const indianMenuItems = [
         rating: 4.8,
         available: true,
         categorySlug: "breads",
-        image: { url: "https://example.com/butter-naan.jpg", public_id: "butter-naan_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Butter_Naan.jpg",
+            public_id: "butter-naan_img",
+        },
     },
     {
         name: "Garlic Naan",
@@ -241,7 +310,10 @@ const indianMenuItems = [
         rating: 4.7,
         available: true,
         categorySlug: "breads",
-        image: { url: "https://example.com/garlic-naan.jpg", public_id: "garlic-naan_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Garlic_naan.jpg",
+            public_id: "garlic-naan_img",
+        },
     },
     {
         name: "Tandoori Roti",
@@ -252,7 +324,10 @@ const indianMenuItems = [
         rating: 4.2,
         available: true,
         categorySlug: "breads",
-        image: { url: "https://example.com/tandoori-roti.jpg", public_id: "tandoori-roti_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Tandoori_roti.jpg",
+            public_id: "tandoori-roti_img",
+        },
     },
     {
         name: "Lachha Paratha",
@@ -263,7 +338,10 @@ const indianMenuItems = [
         rating: 4.5,
         available: true,
         categorySlug: "breads",
-        image: { url: "https://example.com/lachha-paratha.jpg", public_id: "lachha-paratha_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Lachha_paratha.jpg",
+            public_id: "lachha-paratha_img",
+        },
     },
     {
         name: "Cheese Naan",
@@ -274,7 +352,10 @@ const indianMenuItems = [
         rating: 4.6,
         available: true,
         categorySlug: "breads",
-        image: { url: "https://example.com/cheese-naan.jpg", public_id: "cheese-naan_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Cheese_naan.jpg",
+            public_id: "cheese-naan_img",
+        },
     },
 
     // Desserts
@@ -287,7 +368,10 @@ const indianMenuItems = [
         rating: 4.9,
         available: true,
         categorySlug: "desserts",
-        image: { url: "https://example.com/gulab-jamun.jpg", public_id: "gulab-jamun_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Gulab_jamun_(Gibraltar%2C_November_2020).jpg",
+            public_id: "gulab-jamun_img",
+        },
     },
     {
         name: "Rasmalai",
@@ -298,7 +382,10 @@ const indianMenuItems = [
         rating: 4.8,
         available: true,
         categorySlug: "desserts",
-        image: { url: "https://example.com/rasmalai.jpg", public_id: "rasmalai_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Rasmalai.jpg",
+            public_id: "rasmalai_img",
+        },
     },
     {
         name: "Gajar Ka Halwa",
@@ -309,7 +396,10 @@ const indianMenuItems = [
         rating: 4.7,
         available: true,
         categorySlug: "desserts",
-        image: { url: "https://example.com/gajar-halwa.jpg", public_id: "gajar-halwa_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Gajar_halwa.jpg",
+            public_id: "gajar-halwa_img",
+        },
     },
     {
         name: "Kheer",
@@ -320,7 +410,10 @@ const indianMenuItems = [
         rating: 4.5,
         available: true,
         categorySlug: "desserts",
-        image: { url: "https://example.com/kheer.jpg", public_id: "kheer_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Kheer_(rice_pudding).jpg",
+            public_id: "kheer_img",
+        },
     },
     {
         name: "Kulfi",
@@ -331,7 +424,10 @@ const indianMenuItems = [
         rating: 4.6,
         available: true,
         categorySlug: "desserts",
-        image: { url: "https://example.com/kulfi.jpg", public_id: "kulfi_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Kulfi.jpg",
+            public_id: "kulfi_img",
+        },
     },
 
     // Beverages
@@ -344,7 +440,10 @@ const indianMenuItems = [
         rating: 4.8,
         available: true,
         categorySlug: "beverages",
-        image: { url: "https://example.com/mango-lassi.jpg", public_id: "mango-lassi_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Mango_lassi.jpg",
+            public_id: "mango-lassi_img",
+        },
     },
     {
         name: "Masala Chai",
@@ -355,7 +454,10 @@ const indianMenuItems = [
         rating: 4.9,
         available: true,
         categorySlug: "beverages",
-        image: { url: "https://example.com/masala-chai.jpg", public_id: "masala-chai_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Masala_Chai.jpg",
+            public_id: "masala-chai_img",
+        },
     },
     {
         name: "Sweet Lassi",
@@ -366,7 +468,10 @@ const indianMenuItems = [
         rating: 4.5,
         available: true,
         categorySlug: "beverages",
-        image: { url: "https://example.com/sweet-lassi.jpg", public_id: "sweet-lassi_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Sweet_lassi.jpg",
+            public_id: "sweet-lassi_img",
+        },
     },
     {
         name: "Jal Jeera",
@@ -377,7 +482,10 @@ const indianMenuItems = [
         rating: 4.3,
         available: true,
         categorySlug: "beverages",
-        image: { url: "https://example.com/jal-jeera.jpg", public_id: "jal-jeera_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Jal_jeera.jpg",
+            public_id: "jal-jeera_img",
+        },
     },
     {
         name: "Fresh Lime Soda",
@@ -388,7 +496,10 @@ const indianMenuItems = [
         rating: 4.4,
         available: true,
         categorySlug: "beverages",
-        image: { url: "https://example.com/lime-soda.jpg", public_id: "lime-soda_img" }
+        image: {
+            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Fresh_lime_soda.jpg",
+            public_id: "lime-soda_img",
+        },
     },
 ];
 
@@ -398,7 +509,6 @@ const seedData = async () => {
         await connectDB();
         console.log("Connected to MongoDB");
 
-        // Clear existing data for these models
         if (process.env.NODE_ENV === "production" && process.env.ALLOW_PROD_SEED !== "true") {
             throw new Error("Refusing destructive seed in production without ALLOW_PROD_SEED=true");
         }
@@ -407,17 +517,14 @@ const seedData = async () => {
         await MenuItem.deleteMany({});
         console.log("Cleared existing categories and menu items.");
 
-        // Insert categories
         const createdCategories = await Category.insertMany(indianCategories);
         console.log(`Inserted ${createdCategories.length} categories.`);
 
-        // Map category slugs to ObjectIds
         const categoryMap = createdCategories.reduce<Record<string, mongoose.Types.ObjectId>>((acc, cat) => {
             acc[cat.slug] = cat._id;
             return acc;
         }, {});
 
-        // Prepare and insert menu items
         const menuItemsToInsert = indianMenuItems.map(item => {
             const { categorySlug, ...rest } = item;
             const categoryId = categoryMap[categorySlug];
@@ -426,7 +533,7 @@ const seedData = async () => {
             }
             return {
                 ...rest,
-                category: categoryId, // Resolve object reference
+                category: categoryId,
             };
         });
 
