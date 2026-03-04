@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
                     {/* ── Logo ── */}
                     <div style={{ display: 'flex', flex: 1 }}>
                         <Link to="/" style={{ display: 'flex', alignItems: 'flex-end' }}>
-                            <img alt="Annapurna logo" style={{ height: '3rem' }} src="/FoodieFiesta_files/logo-hvC0bAJS.svg" />
+                            <img alt="Annapurna logo" style={{ height: '3rem' }} src="/logo-hvC0bAJS.svg" />
                             <div>
                                 <span style={{ display: 'block', fontWeight: 800, fontSize: '1.75rem', position: 'relative', top: '4px', left: '4px', letterSpacing: '-0.02em' }}>Annapurna</span>
                                 <span style={{ display: 'block', fontWeight: 800, fontSize: '0.7rem', position: 'relative', left: '6px', letterSpacing: '9px', textTransform: 'uppercase', color: 'var(--color-solid)' }}>Junction</span>
