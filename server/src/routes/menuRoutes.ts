@@ -11,7 +11,7 @@ import {
     deleteMenuItem,
     toggleAvailability
 } from '../controllers/menuController.js';
-import type { NextFunction } from 'express';
+import type { Request as ExpressRequest, Response as ExpressResponse, NextFunction } from 'express';
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ router.get('/trending', getTrendingItems);
 router.get('/:id', getMenuItemById);
 
 router.post('/', protect, adminOnly, upload.single('image'), createMenuItem);
-router.put('/:id', protect, adminOnly, (req: Request, res: Response, next: NextFunction) => {
+router.put('/:id', protect, adminOnly, (req: ExpressRequest, res: ExpressResponse, next: NextFunction) => {
     upload.single('image')(req, res, (err) => {
         if (err) {
             console.error("Multer/Cloudinary upload error:", JSON.stringify(err, Object.getOwnPropertyNames(err)));
