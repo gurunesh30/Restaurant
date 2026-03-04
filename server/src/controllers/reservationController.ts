@@ -3,40 +3,39 @@ import Reservation from "../models/Reservation.js";
 import Table from "../models/Table.js";
 import mongoose from "mongoose";
 
-// @desc    All tables with live status
-// @route   GET /api/reservations/tables
+// @desc    All tables with live real-time status for a given date/time
+// @route   GET /api/reservations/tables?date=YYYY-MM-DD&time=TIME_SLOT
 export const getTablesWithStatus = async (req: Request, res: Response): Promise<void> => {
     try {
         const { date, time } = req.query;
 
+        // Fetch all tables sorted by tableNumber
         const tables = await Table.find().sort({ tableNumber: 1 });
 
         if (!date || !time) {
+            // No time filter — just return base status from DB
             res.status(200).json({ success: true, data: tables });
             return;
         }
 
-        // Simplistic approach: if a reservation exists for that date and time, the table is booked
-        // In realistic scenarios, you might consider time slots or duration
+        // Find all currently active reservations for the requested date/time slot
         const reservations = await Reservation.find({
             date: date as string,
             time: time as string,
             status: { $in: ["confirmed", "pending"] }
         });
 
-        const bookedTableIds = reservations.map(r => r.tableId.toString());
+        const bookedTableIds = new Set(reservations.map(r => r.tableId.toString()));
 
-        const tablesWithStatus = tables.map(table => {
-            const isBooked = bookedTableIds.includes(table._id.toString());
-            return {
-                ...table.toObject(),
-                status: isBooked ? "booked" : table.status
-            };
-        });
+        // Overlay real-time booked status on top of the table's own status
+        const tablesWithStatus = tables.map(table => ({
+            ...table.toObject(),
+            status: bookedTableIds.has(table._id.toString()) ? "booked" : table.status,
+        }));
 
         res.status(200).json({ success: true, data: tablesWithStatus });
     } catch (error: any) {
-        res.status(500).json({ success: false, message: "Failed to load tables status", error: error.message });
+        res.status(500).json({ success: false, message: "Failed to load table status", error: error.message });
     }
 };
 
@@ -53,7 +52,6 @@ export const checkAvailability = async (req: Request, res: Response): Promise<vo
 
         const guestCount = parseInt(guests as string, 10);
 
-        // Find tables that can accommodate the guests and are not unavailable completely
         const suitableTables = await Table.find({
             capacity: { $gte: guestCount },
             status: { $ne: "unavailable" }
@@ -83,8 +81,20 @@ export const createReservation = async (req: Request, res: Response): Promise<vo
     try {
         const { customerName, customerEmail, customerPhone, tableId, date, time, guests, notes } = req.body;
 
-        if (!customerName || !customerEmail || !customerPhone || !tableId || !date || !time || !guests) {
+        if (!customerName || !customerPhone || !tableId || !date || !time || !guests) {
             res.status(400).json({ success: false, message: "Missing required fields" });
+            return;
+        }
+
+        // Validate the table exists
+        const table = await Table.findById(tableId);
+        if (!table) {
+            res.status(404).json({ success: false, message: "Table not found" });
+            return;
+        }
+
+        if (table.status === "unavailable") {
+            res.status(400).json({ success: false, message: "Table is unavailable" });
             return;
         }
 
@@ -97,7 +107,7 @@ export const createReservation = async (req: Request, res: Response): Promise<vo
         });
 
         if (existingReservation) {
-            res.status(400).json({ success: false, message: "Table is already booked at this time" });
+            res.status(409).json({ success: false, message: "Table is already booked at this time" });
             return;
         }
 
@@ -108,14 +118,14 @@ export const createReservation = async (req: Request, res: Response): Promise<vo
 
         const reservationPayload: any = {
             customerName,
-            customerEmail,
+            customerEmail: customerEmail || "",
             customerPhone,
             tableId: new mongoose.Types.ObjectId(tableId),
             date,
             time,
-            guests,
-            notes,
-            status: "pending"
+            guests: Number(guests),
+            notes: notes || "",
+            status: "confirmed"   // auto-confirm on creation
         };
 
         if (userId) {
@@ -124,8 +134,12 @@ export const createReservation = async (req: Request, res: Response): Promise<vo
 
         const reservation = await Reservation.create(reservationPayload);
 
+        // Populate table info in the response
+        await reservation.populate("tableId");
+
         res.status(201).json({ success: true, data: reservation });
     } catch (error: any) {
+        console.error('[createReservation] Error:', error.message, error.errors ?? '');
         res.status(500).json({ success: false, message: "Failed to create reservation", error: error.message });
     }
 };
@@ -173,12 +187,12 @@ export const cancelMyReservation = async (req: Request, res: Response): Promise<
     }
 };
 
-// @desc    All reservations
+// @desc    All reservations (Admin)
 // @route   GET /api/reservations
 export const getAllReservations = async (_req: Request, res: Response): Promise<void> => {
     try {
         const reservations = await Reservation.find()
-            .populate({ path: "tableId", select: "tableNumber capacity" })
+            .populate({ path: "tableId", select: "tableNumber label capacity section floor" })
             .populate({ path: "userId", select: "name email" })
             .sort({ createdAt: -1 });
 
@@ -188,7 +202,7 @@ export const getAllReservations = async (_req: Request, res: Response): Promise<
     }
 };
 
-// @desc    Update status
+// @desc    Update reservation status (Admin)
 // @route   PATCH /api/reservations/:id/status
 export const updateReservationStatus = async (req: Request, res: Response): Promise<void> => {
     try {

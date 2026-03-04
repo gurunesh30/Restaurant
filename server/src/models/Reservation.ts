@@ -5,7 +5,7 @@ export type BookingStatus = "pending" | "confirmed" | "cancelled" | "completed";
 
 export interface IReservation extends Document {
   customerName: string;
-  customerEmail: string;
+  customerEmail?: string;
   customerPhone: string;
   tableId: Types.ObjectId;
   userId?: Types.ObjectId;
@@ -21,7 +21,7 @@ export interface IReservation extends Document {
 const reservationSchema = new Schema<IReservation>(
   {
     customerName: { type: String, required: true },
-    customerEmail: { type: String, required: true },
+    customerEmail: { type: String, default: '' },
     customerPhone: { type: String, required: true },
     tableId: { type: Schema.Types.ObjectId, ref: "Table", required: true },
     userId: { type: Schema.Types.ObjectId, ref: "User", default: null },
