@@ -35,7 +35,7 @@ Annapurna is a full-stack modern restaurant management application designed to h
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/lightning4747/Restaurant.git
-cd restaurant-app
+cd Restaurant
 ```
 
 ### 2. Backend Setup
@@ -143,4 +143,5 @@ npm run dev
 
 ### Authentication
 ![Auth](client/public/screenshots/signup.png)
+
 
