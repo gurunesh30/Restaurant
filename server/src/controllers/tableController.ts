@@ -2,11 +2,16 @@ import type { Request, Response } from "express";
 import Table from "../models/Table.js";
 import Reservation from "../models/Reservation.js";
 
-// @desc    Get all tables
+// @desc    Get all tables (optionally filtered by floor/section)
 // @route   GET /api/tables
-export const getTables = async (_req: Request, res: Response): Promise<void> => {
+export const getTables = async (req: Request, res: Response): Promise<void> => {
     try {
-        const tables = await Table.find().sort({ tableNumber: 1 });
+        const { floor, section } = req.query;
+        const filter: Record<string, any> = {};
+        if (floor) filter.floor = Number(floor);
+        if (section) filter.section = section as string;
+
+        const tables = await Table.find(filter).sort({ tableNumber: 1 });
         res.status(200).json({ success: true, data: tables });
     } catch (error: any) {
         res.status(500).json({ success: false, message: "Failed to load tables", error: error.message });
@@ -17,9 +22,9 @@ export const getTables = async (_req: Request, res: Response): Promise<void> => 
 // @route   POST /api/tables
 export const addTable = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { tableNumber, capacity, shape, position, floor } = req.body;
+        const { tableNumber, label, capacity, shape, section, floor } = req.body;
 
-        if (!tableNumber || !capacity || !shape || !position || !floor) {
+        if (!tableNumber || !label || !capacity || !shape || !section || !floor) {
             res.status(400).json({ success: false, message: "Missing required fields" });
             return;
         }
@@ -30,14 +35,7 @@ export const addTable = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
-        const table = await Table.create({
-            tableNumber,
-            capacity,
-            shape,
-            position,
-            floor,
-        });
-
+        const table = await Table.create({ tableNumber, label, capacity, shape, section, floor });
         res.status(201).json({ success: true, data: table });
     } catch (error: any) {
         res.status(500).json({ success: false, message: "Failed to create table", error: error.message });
@@ -48,7 +46,7 @@ export const addTable = async (req: Request, res: Response): Promise<void> => {
 // @route   PUT /api/tables/:id
 export const updateTable = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { tableNumber, capacity, shape, position, floor, status } = req.body;
+        const { tableNumber, label, capacity, shape, section, floor, status } = req.body;
 
         const table = await Table.findById(req.params.id);
         if (!table) {
@@ -65,9 +63,10 @@ export const updateTable = async (req: Request, res: Response): Promise<void> =>
             table.tableNumber = tableNumber;
         }
 
+        if (label) table.label = label;
         if (capacity) table.capacity = capacity;
         if (shape) table.shape = shape;
-        if (position) table.position = position;
+        if (section) table.section = section;
         if (floor) table.floor = floor;
         if (status !== undefined) {
             const allowedStatuses = ["available", "booked", "unavailable"];
@@ -93,7 +92,7 @@ export const deleteTable = async (req: Request, res: Response): Promise<void> =>
 
         const reservationsCount = await Reservation.countDocuments({ tableId: tableId as any });
         if (reservationsCount > 0) {
-            res.status(400).json({ success: false, message: "Cannot delete table with reservations" });
+            res.status(400).json({ success: false, message: "Cannot delete table with existing reservations" });
             return;
         }
 
@@ -109,7 +108,7 @@ export const deleteTable = async (req: Request, res: Response): Promise<void> =>
     }
 };
 
-// @desc    Set table availability manually
+// @desc    Set table availability manually (admin)
 // @route   PATCH /api/tables/:id/status
 export const updateTableStatus = async (req: Request, res: Response): Promise<void> => {
     try {
