@@ -139,6 +139,7 @@ export const createReservation = async (req: Request, res: Response): Promise<vo
 
         res.status(201).json({ success: true, data: reservation });
     } catch (error: any) {
+        console.error('[createReservation] Error:', error.message, error.errors ?? '');
         res.status(500).json({ success: false, message: "Failed to create reservation", error: error.message });
     }
 };
