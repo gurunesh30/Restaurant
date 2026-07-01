@@ -1,184 +1,138 @@
-﻿```markdown
-# Annapurna - Restaurant Management System
+﻿# Annapurna — Restaurant Management System
 
-## Architecture Overview
+A full-stack restaurant management platform providing digital menu browsing, table reservation management, and an administrative dashboard for operations and analytics.
 
-Annapurna is a production-grade restaurant management platform built with a decoupled architecture. The system handles two primary domains: customer-facing operations (menu browsing, table reservations) and administrative workflows (inventory management, business intelligence). The frontend and backend communicate through a RESTful API layer with JWT-based authentication.
+## Overview
 
----
+Annapurna is built as a two-tier application: a React/TypeScript client and a Node.js/Express API server, backed by MongoDB. It supports customer-facing menu and reservation flows alongside an internal admin console for staff to manage inventory, reservations, and performance metrics.
 
-## Core Domains
+## Features
 
-### Customer Experience
+- **Menu Management** — Categorized menu catalog with dietary classification (veg/non-veg), availability status, and trending indicators.
+- **Table Reservations** — Interactive floor plan (Ground, Lounge, Patio) with real-time availability and booking status tracking (Pending, Confirmed, Completed, Cancelled).
+- **Admin Dashboard** — Weekly revenue and booking analytics, menu CRUD operations with image upload, and reservation lifecycle management.
+- **Authentication** — Google OAuth 2.0 via Passport.js, session management with JWT.
+- **Responsive UI** — Component-driven design system built on CSS variables.
 
-- **Dynamic Menu System**  
-  Items are organized by category with runtime status indicators (Veg/Non-Veg, availability, trending designation). The trending algorithm weights recent order frequency and user engagement signals.
+## Architecture
 
-- **Floor Plan Reservation**  
-  Multi-floor table mapping (Ground, Lounge, Patio) with real-time slot availability. The reservation service validates against existing bookings and table capacity constraints at the time of request.
-
-- **Authentication Flow**  
-  OAuth 2.0 implementation via Google Identity Services with token-based session management.
-
-### Administrative Operations
-
-- **Business Intelligence Dashboard**  
-  Weekly aggregated metrics including revenue trends, booking conversion rates, and dish performance analytics derived from order data.
-
-- **Menu CRUD**  
-  Full lifecycle management of menu items with Cloudinary integration for asset handling. Supports image optimization presets through Cloudinary's transformation API.
-
-- **Reservation Workflow**  
-  State machine for booking statuses (`Pending → Confirmed → Completed | Cancelled`). Status transitions trigger relevant side effects (table availability updates, notification dispatch).
-
----
-
-## Technical Stack
-
-| Layer | Technology | Justification |
-|:------|:-----------|:--------------|
-| Client Runtime | React 18, TypeScript, Vite | Type safety across the component tree; Vite for sub-second HMR in development |
-| UI Primitives | Lucide React, CSS Custom Properties | Zero-runtime CSS variable system for theming; tree-shakeable icon library |
-| HTTP Client | Axios | Interceptor architecture for token refresh and error normalization |
-| API Server | Node.js, Express, TypeScript | Shared type definitions with client; middleware composition for auth, validation, error handling |
-| Data Layer | Mongoose ODM, MongoDB Atlas | Document model aligns with nested reservation structures; Atlas handles scaling concerns |
-| Auth | Passport.js (Google Strategy), JWT | Passport decouples provider logic; JWT for stateless API authentication |
-| Asset Management | Cloudinary SDK | Server-side signed uploads; on-the-fly image transformations |
-
----
+| Layer | Technology |
+|---|---|
+| Frontend | React, TypeScript, Vite, Axios |
+| Backend | Node.js, Express, TypeScript, Mongoose |
+| Database | MongoDB Atlas |
+| Auth | Passport.js (Google OAuth strategy), JWT |
+| Media Storage | Cloudinary |
 
 ## Prerequisites
 
-- **Node.js** 18 LTS or higher
-- **MongoDB Atlas** cluster (M0 free tier sufficient for development)
-- **Cloudinary** account with upload preset configured
-- **Google Cloud Platform** project with OAuth 2.0 credentials
+- Node.js v16 or later
+- A MongoDB Atlas cluster
+- A Cloudinary account
+- A Google Cloud Console project with OAuth 2.0 credentials
 
----
+## Setup
 
-## Environment Configuration
-
-### Server (`server/.env`)
-
-```env
-PORT=8000
-NODE_ENV=development
-
-# MongoDB Atlas connection string
-MONGO_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/annapurna
-
-# JWT signing configuration
-JWT_SECRET=<cryptographically-random-string>
-JWT_EXPIRES_IN=7d
-
-# Google OAuth 2.0 - Web application credentials
-GOOGLE_CLIENT_ID=<client-id>.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=<client-secret>
-GOOGLE_CALLBACK_URL=http://localhost:8000/api/auth/google/callback
-
-# Cloudinary - Signed upload configuration
-CLOUDINARY_CLOUD_NAME=<cloud-name>
-CLOUDINARY_API_KEY=<api-key>
-CLOUDINARY_API_SECRET=<api-secret>
-
-# CORS origins
-CLIENT_URL=http://localhost:5173
-FRONTEND_URL=http://localhost:5173
-
-# Seed admin credentials (change after initial setup)
-ADMIN_EMAIL=vignesh112847@gmail.com
-ADMIN_PASSWORD=vignesh1128
-```
-
-### Client (`client/.env`)
-
-```env
-VITE_API_URL=http://localhost:8000/api
-VITE_GOOGLE_MAPS_API_KEY=<maps-api-key>
-```
-
----
-
-## Setup Procedure
-
-### 1. Repository Initialization
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/lightning4747/Restaurant.git
 cd Restaurant
 ```
 
-### 2. Backend Bootstrap
+### 2. Backend
 
 ```bash
 cd server
 npm install
+```
 
-# Seed menu catalog with categories and items
-npm run seed
+Create a `.env` file in `server/` using the template below. **Do not commit this file or any real credentials to version control.**
 
-# Initialize floor plans and table inventory
-npm run seed:tables
+```env
+PORT=8000
+NODE_ENV=development
 
-# Start development server with hot reload
+# Database
+MONGO_URI=
+
+# Auth
+JWT_SECRET=
+JWT_EXPIRES_IN=7d
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_CALLBACK_URL=http://localhost:8000/api/auth/google/callback
+
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+
+# URLs
+CLIENT_URL=http://localhost:5173
+FRONTEND_URL=http://localhost:5173
+
+# Initial admin bootstrap (set once, then rotate/remove)
+ADMIN_EMAIL=
+ADMIN_PASSWORD=
+```
+
+Seed the database and start the server:
+
+```bash
+npm run seed          # menu categories and items
+npm run seed:tables   # table/floor layout
 npm run dev
 ```
 
-> **Note:** The seed scripts populate the database with a baseline menu structure and table layout across three zones. These are idempotent—running them against an existing database will skip duplicate entries.
-
-### 3. Frontend Bootstrap
+### 3. Frontend
 
 ```bash
 cd ../client
 npm install
+```
+
+Create a `.env` file in `client/`:
+
+```env
+VITE_API_URL=http://localhost:8000/api
+VITE_GOOGLE_MAPS_API_KEY=
+```
+
+Start the client:
+
+```bash
 npm run dev
 ```
 
-> Vite dev server starts on port `5173` with proxy configuration handled through the Vite config, not the env file.
+## Configuration Reference
 
----
+| Service | Purpose | Provisioning |
+|---|---|---|
+| MongoDB Atlas | Primary datastore | mongodb.com |
+| Google OAuth | Authentication | Google Cloud Console |
+| Cloudinary | Menu image storage | cloudinary.com |
+| Google Maps API | Contact/location page | Google Cloud Console |
 
-## External Service Dependencies
+## Security Notes
 
-| Service | Integration Point | Purpose |
-|:--------|:------------------|:--------|
-| MongoDB Atlas | Connection string in `MONGO_URI` | Primary data store for menu items, reservations, user profiles |
-| Google Identity | OAuth 2.0 web flow | User authentication and profile retrieval |
-| Cloudinary | Upload API with signed requests | Menu item image upload, storage, and delivery with CDN |
-| Google Maps Embed | Client-side Maps JavaScript API | Embedded location map on contact page |
+- All secrets are supplied via environment variables and must never be committed to source control.
+- The `ADMIN_EMAIL` / `ADMIN_PASSWORD` bootstrap values are for initial setup only; rotate or disable them after the first admin account is provisioned.
+- Add `.env` to `.gitignore` in both `server/` and `client/` if not already present.
 
----
+## Screenshots
 
-## Key Design Decisions
+| | |
+|---|---|
+| Home | `client/public/screenshots/homeintro.png` |
+| Trending Dishes | `client/public/screenshots/trending.png` |
+| Menu | `client/public/screenshots/menu.png` |
+| Table Reservation | `client/public/screenshots/tables.png` |
+| Admin Dashboard | `client/public/screenshots/admin-dashboard.png` |
+| Menu Admin | `client/public/screenshots/admin-menu.png` |
+| Contact | `client/public/screenshots/contact.png` |
+| Authentication | `client/public/screenshots/signup.png` |
 
-1. **Stateless JWT over sessions**  
-   Enables horizontal scaling without sticky sessions. Token invalidation is handled through short expiration (7d) and client-side removal on logout.
+## License
 
-2. **Cloudinary signed uploads**  
-   Server-side signature generation prevents exposure of API secrets to the client while maintaining direct-to-Cloudinary upload throughput.
-
-3. **Table reservation as a state machine**  
-   Explicit status transitions prevent invalid state mutations (e.g., completing a cancelled reservation) through validation middleware on each status update endpoint.
-
-4. **CSS Custom Properties for theming**  
-   The design system variables are defined in a single source file. Runtime theme switching requires zero JavaScript computation—only variable reassignment.
-
----
-
-## UI Reference
-
-| View | Description |
-|:-----|:------------|
-| Home Page | Landing section with hero banner |
-| Trending Items | Dynamically populated carousel based on engagement metrics |
-| Full Menu | Categorized display with inline status indicators |
-| Table Reservation | Interactive floor plan with real-time availability |
-| Admin Dashboard | Weekly revenue, booking counts, dish performance charts |
-| Menu Management | CRUD interface with Cloudinary upload widget |
-| Contact & Location | Embedded Google Maps with restaurant details |
-| Authentication | OAuth consent screen integration |
-```
-
----
-
-Let me know if you'd like to add any other sections—such as API documentation, testing strategy, deployment pipeline, or contribution guidelines.
+Specify a license (e.g., MIT) here if this project is intended for public distribution.
