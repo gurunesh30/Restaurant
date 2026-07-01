@@ -122,16 +122,29 @@ npm run dev
 
 ## Screenshots
 
-| | |
-|---|---|
-| Home | `client/public/screenshots/homeintro.png` |
-| Trending Dishes | `client/public/screenshots/trending.png` |
-| Menu | `client/public/screenshots/menu.png` |
-| Table Reservation | `client/public/screenshots/tables.png` |
-| Admin Dashboard | `client/public/screenshots/admin-dashboard.png` |
-| Menu Admin | `client/public/screenshots/admin-menu.png` |
-| Contact | `client/public/screenshots/contact.png` |
-| Authentication | `client/public/screenshots/signup.png` |
+### Home Page
+![Home Page](client/public/screenshots/homeintro.png)
+
+### Trending Dishes
+![Trending Items](client/public/screenshots/trending.png)
+
+### Full Menu
+![Menu](client/public/screenshots/menu.png)
+
+### Table Reservation Plan
+![Table Layout](client/public/screenshots/tables.png)
+
+### Admin Analytical Dashboard
+![Dashboard](client/public/screenshots/admin-dashboard.png)
+
+### Menu Management (Cloudinary Integration)
+![Menu Admin](client/public/screenshots/admin-menu.png)
+
+### Contact & Location
+![Contact](client/public/screenshots/contact.png)
+
+### Authentication
+![Auth](client/public/screenshots/signup.png)
 
 ## License
 
