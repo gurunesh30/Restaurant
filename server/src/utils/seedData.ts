@@ -10,497 +10,312 @@ dotenv.config();
 // These are freely licensed (CC BY-SA) and resolve to upload.wikimedia.org.
 
 const indianCategories = [
-    {
-        name: "Starters",
-        slug: "starters",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Paneer_Tikka_Kabab.JPG",
-            public_id: "starters_img",
-        },
-        sortOrder: 1,
+  {
+    "name": "Starters",
+    "slug": "starters",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782886827/restaurant_menu/p6xzitqt57ywiabnpy4s.jpg",
+      "public_id": "starters_img"
     },
-    {
-        name: "Main Course",
-        slug: "main-course",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Chicken_makhani.jpg",
-            public_id: "main_img",
-        },
-        sortOrder: 2,
+    "sortOrder": 1
+  },
+  {
+    "name": "Main Course",
+    "slug": "main-course",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782887208/restaurant_menu/ay6sxpjuku3wvmsei6pp.jpg",
+      "public_id": "main-course_img"
     },
-    {
-        name: "Breads",
-        slug: "breads",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Butter_Naan.jpg",
-            public_id: "breads_img",
-        },
-        sortOrder: 3,
+    "sortOrder": 2
+  },
+  {
+    "name": "Breads",
+    "slug": "breads",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782886838/restaurant_menu/xfxn2hgdilwpkd5slrya.jpg",
+      "public_id": "breads_img"
     },
-    {
-        name: "Desserts",
-        slug: "desserts",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Gulab_jamun_(Gibraltar%2C_November_2020).jpg",
-            public_id: "desserts_img",
-        },
-        sortOrder: 4,
+    "sortOrder": 3
+  },
+  {
+    "name": "Desserts",
+    "slug": "desserts",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782886871/restaurant_menu/gyfsoppw1ttwnxmdrprj.jpg",
+      "public_id": "desserts_img"
     },
-    {
-        name: "Beverages",
-        slug: "beverages",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Mango_lassi.jpg",
-            public_id: "beverages_img",
-        },
-        sortOrder: 5,
+    "sortOrder": 4
+  },
+  {
+    "name": "Beverages",
+    "slug": "beverages",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782886913/restaurant_menu/zysiim7razzybl6gsuke.jpg",
+      "public_id": "beverages_img"
     },
+    "sortOrder": 5
+  }
 ];
 
 const indianMenuItems = [
-    // Starters
     {
-        name: "Paneer Tikka",
-        description: "Cubes of paneer marinated in spices and grilled in a tandoor.",
-        price: 180,
-        isVeg: true,
-        isTrending: true,
-        rating: 4.5,
-        available: true,
-        categorySlug: "starters",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Paneer_Tikka_Kabab.JPG",
-            public_id: "paneer-tikka_img",
-        },
-    },
-    {
-        name: "Chicken Tikka",
-        description: "Boneless chicken pieces marinated in yogurt and spices, grilled perfectly.",
-        price: 220,
-        isVeg: false,
-        isTrending: true,
-        rating: 4.6,
-        available: true,
-        categorySlug: "starters",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Awadhi_chicken_tikka.jpg",
-            public_id: "chicken-tikka_img",
-        },
-    },
-    {
-        name: "Vegetable Samosa",
-        description: "Crispy pastry filled with spiced potatoes and peas.",
-        price: 60,
-        isVeg: true,
-        isTrending: false,
-        rating: 4.2,
-        available: true,
-        categorySlug: "starters",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Samosas_and_pakoras_in_Jaipur%2C_India.jpg",
-            public_id: "samosa_img",
-        },
-    },
-    {
-        name: "Aloo Tikki",
-        description: "Spiced potato patties served with chutney.",
-        price: 100,
-        isVeg: true,
-        isTrending: false,
-        rating: 4.3,
-        available: true,
-        categorySlug: "starters",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Aloo_Tikki_-_Homemade_-_Assam_-_DSC_002.jpg",
-            public_id: "aloo-tikki_img",
-        },
-    },
-    {
-        name: "Fish Amritsari",
-        description: "Deep-fried fish fillets coated in a spiced gram flour batter.",
-        price: 250,
-        isVeg: false,
-        isTrending: false,
-        rating: 4.4,
-        available: true,
-        categorySlug: "starters",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Amritsari_fish.jpg",
-            public_id: "fish-amritsari_img",
-        },
-    },
-    {
-        name: "Hara Bhara Kabab",
-        description: "Patties made from spinach, peas, and potatoes.",
-        price: 150,
-        isVeg: true,
-        isTrending: false,
-        rating: 4.1,
-        available: true,
-        categorySlug: "starters",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Hara_Bhara_Kabab.jpg",
-            public_id: "hara-bhara_img",
-        },
-    },
-
+    "name": "Paneer Tikka",
+    "description": "Cubes of paneer marinated in spices and grilled in a tandoor.",
+    "price": 180,
+    "isVeg": true,
+    "isTrending": true,
+    "rating": 4.5,
+    "available": true,
+    "categorySlug": "starters",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782887062/restaurant_menu/ejo5jagvenr771fo7d7b.jpg",
+      "public_id": "paneer-tikka_img"
+    }
+  },
+  {
+    "name": "Chicken Tikka",
+    "description": "Boneless chicken pieces marinated in yogurt and spices, grilled perfectly.",
+    "price": 220,
+    "isVeg": false,
+    "isTrending": true,
+    "rating": 4.6,
+    "available": true,
+    "categorySlug": "starters",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782887066/restaurant_menu/eqaw11djf1ojntd9ip4d.jpg",
+      "public_id": "chicken-tikka_img"
+    }
+  },
+  {
+    "name": "Vegetable Samosa",
+    "description": "Crispy pastry filled with spiced potatoes and peas.",
+    "price": 60,
+    "isVeg": true,
+    "isTrending": false,
+    "rating": 4.2,
+    "available": true,
+    "categorySlug": "starters",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782887117/restaurant_menu/qat05rhc3du1fonpcuh4.jpg",
+      "public_id": "samosa_img"
+    }
+  },
+  {
+    "name": "Aloo Tikki",
+    "description": "Spiced potato patties served with chutney.",
+    "price": 100,
+    "isVeg": true,
+    "isTrending": false,
+    "rating": 4.3,
+    "available": true,
+    "categorySlug": "starters",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782887146/restaurant_menu/tirvmp41b0xp4kzpw05n.jpg",
+      "public_id": "aloo-tikki_img"
+    }
+  },
     // Main Course
     {
-        name: "Butter Chicken",
-        description: "Tender chicken cooked in a rich, creamy tomato gravy.",
-        price: 350,
-        isVeg: false,
-        isTrending: true,
-        rating: 4.8,
-        available: true,
-        categorySlug: "main-course",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Chicken_makhani.jpg",
-            public_id: "butter-chicken_img",
-        },
-    },
+    "name": "Butter Chicken",
+    "description": "Tender chicken cooked in a rich, creamy tomato gravy.",
+    "price": 350,
+    "isVeg": false,
+    "isTrending": true,
+    "rating": 4.8,
+    "available": true,
+    "categorySlug": "main-course",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782887208/restaurant_menu/ay6sxpjuku3wvmsei6pp.jpg",
+      "public_id": "butter-chicken_img"
+    }
+  },
+  {
+    "name": "Palak Paneer",
+    "description": "Paneer cubes in a smooth, spiced spinach puree.",
+    "price": 280,
+    "isVeg": true,
+    "isTrending": true,
+    "rating": 4.6,
+    "available": true,
+    "categorySlug": "main-course",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782887250/restaurant_menu/w5j13mqddq36pcljuogb.jpg",
+      "public_id": "palak-paneer_img"
+    }
+  },
+      {
+    "name": "Chicken Biryani",
+    "description": "Aromatic basmati rice cooked with spiced chicken.",
+    "price": 320,
+    "isVeg": false,
+    "isTrending": true,
+    "rating": 4.9,
+    "available": true,
+    "categorySlug": "main-course",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782887318/restaurant_menu/l0n0vsyd3aup9wref6qq.jpg",
+      "public_id": "chicken-biryani_img"
+    }
+  },
+      {
+    "name": "Paneer Butter Masala",
+    "description": "Paneer cooked in a rich and creamy tomato-onion gravy.",
+    "price": 290,
+    "isVeg": true,
+    "isTrending": true,
+    "rating": 4.6,
+    "available": true,
+    "categorySlug": "main-course",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782887343/restaurant_menu/agl1d1zxb1adzhmphds7.jpg",
+      "public_id": "pbm_img"
+    }
+  },
+  {
+    "name": "Fish Curry",
+    "description": "Fish simmered in a tangy and spicy coconut gravy.",
+    "price": 380,
+    "isVeg": false,
+    "isTrending": false,
+    "rating": 4.5,
+    "available": true,
+    "categorySlug": "main-course",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782890053/restaurant_menu/pefwsy08vsqpx2zuiyvh.jpg",
+      "public_id": "fish-curry_img"
+    }
+},
     {
-        name: "Palak Paneer",
-        description: "Paneer cubes in a smooth, spiced spinach puree.",
-        price: 280,
-        isVeg: true,
-        isTrending: true,
-        rating: 4.6,
-        available: true,
-        categorySlug: "main-course",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Cottage_cheese_in_spinach_gravy(palak_paneer).jpg",
-            public_id: "palak-paneer_img",
-        },
-    },
-    {
-        name: "Dal Makhani",
-        description: "Slow-cooked black lentils and kidney beans with butter and cream.",
-        price: 220,
-        isVeg: true,
-        isTrending: true,
-        rating: 4.7,
-        available: true,
-        categorySlug: "main-course",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Dal_makhani_(1).jpg",
-            public_id: "dal-makhani_img",
-        },
-    },
-    {
-        name: "Chicken Biryani",
-        description: "Aromatic basmati rice cooked with spiced chicken.",
-        price: 320,
-        isVeg: false,
-        isTrending: true,
-        rating: 4.9,
-        available: true,
-        categorySlug: "main-course",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Spicy_Chicken_Biryani.JPG",
-            public_id: "chicken-biryani_img",
-        },
-    },
-    {
-        name: "Mutton Rogan Josh",
-        description: "A classic Kashmiri dish of tender lamb cooked in a rich, red sauce.",
-        price: 450,
-        isVeg: false,
-        isTrending: false,
-        rating: 4.7,
-        available: true,
-        categorySlug: "main-course",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Rogan_Josh.jpg",
-            public_id: "rogan-josh_img",
-        },
-    },
-    {
-        name: "Paneer Butter Masala",
-        description: "Paneer cooked in a rich and creamy tomato-onion gravy.",
-        price: 290,
-        isVeg: true,
-        isTrending: true,
-        rating: 4.6,
-        available: true,
-        categorySlug: "main-course",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/An_aesthetic_Panner_Butter_Masala.jpg",
-            public_id: "pbm_img",
-        },
-    },
-    {
-        name: "Chana Masala",
-        description: "Spicy and tangy chickpea curry.",
-        price: 180,
-        isVeg: true,
-        isTrending: false,
-        rating: 4.3,
-        available: true,
-        categorySlug: "main-course",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Chole_(Chana_masala).jpg",
-            public_id: "chana-masala_img",
-        },
-    },
-    {
-        name: "Vegetable Biryani",
-        description: "Flavorful rice dish with assorted vegetables and spices.",
-        price: 250,
-        isVeg: true,
-        isTrending: false,
-        rating: 4.4,
-        available: true,
-        categorySlug: "main-course",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Awadhi_Vegetable_Biryani.jpg",
-            public_id: "veg-biryani_img",
-        },
-    },
-    {
-        name: "Fish Curry",
-        description: "Fish simmered in a tangy and spicy coconut gravy.",
-        price: 380,
-        isVeg: false,
-        isTrending: false,
-        rating: 4.5,
-        available: true,
-        categorySlug: "main-course",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Naan_with_fish_curry_avadhi_cuisine.jpg",
-            public_id: "fish-curry_img",
-        },
-    },
-    {
-        name: "Kadhai Paneer",
-        description: "Paneer cubes cooked with bell peppers, tomatoes, and freshly ground spices.",
-        price: 270,
-        isVeg: true,
-        isTrending: false,
-        rating: 4.5,
-        available: true,
-        categorySlug: "main-course",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Kadai_paneer.jpg",
-            public_id: "kadhai-paneer_img",
-        },
-    },
+    "name": "Kadhai Paneer",
+    "description": "Paneer cubes cooked with bell peppers, tomatoes, and freshly ground spices.",
+    "price": 270,
+    "isVeg": true,
+    "isTrending": false,
+    "rating": 4.5,
+    "available": true,
+    "categorySlug": "main-course",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782890057/restaurant_menu/cc7ubac8khohsdiitqij.jpg",
+      "public_id": "kadhai-paneer_img"
+    }
+  },
 
     // Breads
     {
-        name: "Butter Naan",
-        description: "Soft Indian bread baked in a tandoor and brushed with butter.",
-        price: 50,
-        isVeg: true,
-        isTrending: true,
-        rating: 4.8,
-        available: true,
-        categorySlug: "breads",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Butter_Naan.jpg",
-            public_id: "butter-naan_img",
-        },
-    },
-    {
-        name: "Garlic Naan",
-        description: "Naan bread topped with minced garlic and cilantro.",
-        price: 70,
-        isVeg: true,
-        isTrending: true,
-        rating: 4.7,
-        available: true,
-        categorySlug: "breads",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Garlic_naan.jpg",
-            public_id: "garlic-naan_img",
-        },
-    },
-    {
-        name: "Tandoori Roti",
-        description: "Whole wheat bread baked in a clay oven.",
-        price: 30,
-        isVeg: true,
-        isTrending: false,
-        rating: 4.2,
-        available: true,
-        categorySlug: "breads",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Tandoori_roti.jpg",
-            public_id: "tandoori-roti_img",
-        },
-    },
-    {
-        name: "Lachha Paratha",
-        description: "Multi-layered flaky whole wheat bread.",
-        price: 60,
-        isVeg: true,
-        isTrending: false,
-        rating: 4.5,
-        available: true,
-        categorySlug: "breads",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Lachha_paratha.jpg",
-            public_id: "lachha-paratha_img",
-        },
-    },
-    {
-        name: "Cheese Naan",
-        description: "Naan stuffed with gooey melted cheese.",
-        price: 100,
-        isVeg: true,
-        isTrending: true,
-        rating: 4.6,
-        available: true,
-        categorySlug: "breads",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Cheese_naan.jpg",
-            public_id: "cheese-naan_img",
-        },
-    },
-
+    "name": "Butter Naan",
+    "description": "Soft Indian bread baked in a tandoor and brushed with butter.",
+    "price": 50,
+    "isVeg": true,
+    "isTrending": true,
+    "rating": 4.8,
+    "available": true,
+    "categorySlug": "breads",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782887349/restaurant_menu/xfzi0bzmxd09onbtt8vu.jpg",
+      "public_id": "butter-naan_img"
+    }
+  },
+{
+    "name": "Garlic Naan",
+    "description": "Naan bread topped with minced garlic and cilantro.",
+    "price": 70,
+    "isVeg": true,
+    "isTrending": true,
+    "rating": 4.7,
+    "available": true,
+    "categorySlug": "breads",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782890105/restaurant_menu/pbc0kknn80a1vtqkzzdp.jpg",
+      "public_id": "garlic-naan_img"
+    }
+  },
     // Desserts
+      {
+    "name": "Gulab Jamun",
+    "description": "Deep-fried milk dumplings soaked in sugar syrup.",
+    "price": 80,
+    "isVeg": true,
+    "isTrending": true,
+    "rating": 4.9,
+    "available": true,
+    "categorySlug": "desserts",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782890140/restaurant_menu/amevgp43grcdmla0bllx.jpg",
+      "public_id": "gulab-jamun_img"
+    }
+  },
+  {
+    "name": "Rasmalai",
+    "description": "Soft paneer discs soaked in thickened, sweetened milk with cardamom.",
+    "price": 120,
+    "isVeg": true,
+    "isTrending": true,
+    "rating": 4.8,
+    "available": true,
+    "categorySlug": "desserts",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782890172/restaurant_menu/czzx5pzyu8mbqewleqpq.jpg",
+      "public_id": "rasmalai_img"
+    }
+  },
     {
-        name: "Gulab Jamun",
-        description: "Deep-fried milk dumplings soaked in sugar syrup.",
-        price: 80,
-        isVeg: true,
-        isTrending: true,
-        rating: 4.9,
-        available: true,
-        categorySlug: "desserts",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Gulab_jamun_(Gibraltar%2C_November_2020).jpg",
-            public_id: "gulab-jamun_img",
-        },
-    },
-    {
-        name: "Rasmalai",
-        description: "Soft paneer discs soaked in thickened, sweetened milk with cardamom.",
-        price: 120,
-        isVeg: true,
-        isTrending: true,
-        rating: 4.8,
-        available: true,
-        categorySlug: "desserts",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Rasmalai.jpg",
-            public_id: "rasmalai_img",
-        },
-    },
-    {
-        name: "Gajar Ka Halwa",
-        description: "A rich, sweet dessert made from grated carrots, milk, and nuts.",
-        price: 150,
-        isVeg: true,
-        isTrending: false,
-        rating: 4.7,
-        available: true,
-        categorySlug: "desserts",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Gajar_halwa.jpg",
-            public_id: "gajar-halwa_img",
-        },
-    },
-    {
-        name: "Kheer",
-        description: "Traditional Indian rice pudding flavored with cardamom and saffron.",
-        price: 100,
-        isVeg: true,
-        isTrending: false,
-        rating: 4.5,
-        available: true,
-        categorySlug: "desserts",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Kheer_(rice_pudding).jpg",
-            public_id: "kheer_img",
-        },
-    },
-    {
-        name: "Kulfi",
-        description: "Traditional Indian dense ice cream.",
-        price: 90,
-        isVeg: true,
-        isTrending: false,
-        rating: 4.6,
-        available: true,
-        categorySlug: "desserts",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Kulfi.jpg",
-            public_id: "kulfi_img",
-        },
-    },
+    "name": "Kulfi",
+    "description": "Traditional Indian dense ice cream.",
+    "price": 90,
+    "isVeg": true,
+    "isTrending": false,
+    "rating": 4.6,
+    "available": true,
+    "categorySlug": "desserts",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782890204/restaurant_menu/csabl23djxjj8moz0xvb.jpg",
+      "public_id": "kulfi_img"
+    }
+  },
 
     // Beverages
     {
-        name: "Mango Lassi",
-        description: "A refreshing blend of yogurt, mango pulp, and sugar.",
-        price: 110,
-        isVeg: true,
-        isTrending: true,
-        rating: 4.8,
-        available: true,
-        categorySlug: "beverages",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Mango_lassi.jpg",
-            public_id: "mango-lassi_img",
-        },
-    },
+    "name": "Mango Lassi",
+    "description": "A refreshing blend of yogurt, mango pulp, and sugar.",
+    "price": 110,
+    "isVeg": true,
+    "isTrending": true,
+    "rating": 4.8,
+    "available": true,
+    "categorySlug": "beverages",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782890234/restaurant_menu/sgmtnl7eqzvjdrfxzvgt.jpg",
+      "public_id": "mango-lassi_img"
+    }
+  },
     {
-        name: "Masala Chai",
-        description: "Indian tea brewed with milk and aromatic spices.",
-        price: 40,
-        isVeg: true,
-        isTrending: true,
-        rating: 4.9,
-        available: true,
-        categorySlug: "beverages",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Masala_Chai.jpg",
-            public_id: "masala-chai_img",
-        },
-    },
-    {
-        name: "Sweet Lassi",
-        description: "Classic sweetened yogurt drink.",
-        price: 90,
-        isVeg: true,
-        isTrending: false,
-        rating: 4.5,
-        available: true,
-        categorySlug: "beverages",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Sweet_lassi.jpg",
-            public_id: "sweet-lassi_img",
-        },
-    },
-    {
-        name: "Jal Jeera",
-        description: "A tangy, spicy cumin-flavored cooling drink.",
-        price: 60,
-        isVeg: true,
-        isTrending: false,
-        rating: 4.3,
-        available: true,
-        categorySlug: "beverages",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Jal_jeera.jpg",
-            public_id: "jal-jeera_img",
-        },
-    },
-    {
-        name: "Fresh Lime Soda",
-        description: "Refreshing soda with fresh lime juice, sweet or salted.",
-        price: 70,
-        isVeg: true,
-        isTrending: false,
-        rating: 4.4,
-        available: true,
-        categorySlug: "beverages",
-        image: {
-            url: "https://commons.wikimedia.org/wiki/Special:FilePath/Fresh_lime_soda.jpg",
-            public_id: "lime-soda_img",
-        },
-    },
+    "name": "Masala Chai",
+    "description": "Indian tea brewed with milk and aromatic spices.",
+    "price": 40,
+    "isVeg": true,
+    "isTrending": true,
+    "rating": 4.9,
+    "available": true,
+    "categorySlug": "beverages",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782890266/restaurant_menu/j0cuycg8yevqgrdci64l.jpg",
+      "public_id": "masala-chai_img"
+    }
+  },
+{
+    "name": "Jal Jeera",
+    "description": "A tangy, spicy cumin-flavored cooling drink.",
+    "price": 60,
+    "isVeg": true,
+    "isTrending": false,
+    "rating": 4.3,
+    "available": true,
+    "categorySlug": "beverages",
+    "image": {
+      "url": "https://res.cloudinary.com/jjfdbcxj/image/upload/v1782890272/restaurant_menu/hrpluml04bt0mzkpcix8.jpg",
+      "public_id": "jal-jeera_img"
+    }
+  }
 ];
 
 

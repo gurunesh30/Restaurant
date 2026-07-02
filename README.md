@@ -1,124 +1,126 @@
-﻿# 🥗 Annapurna - Indian Restaurant Management System
+﻿# Annapurna — Restaurant Management System
 
-Annapurna is a full-stack modern restaurant management application designed to handle menu browsing, table reservations, and administrative tasks like menu management and analytical dashboards.
+A full-stack restaurant management platform providing digital menu browsing, table reservation management, and an administrative dashboard for operations and analytics.
 
-## ✨ Features
+## Overview
 
-- **Dynamic Menu**: Categorized menu with real-time status (Veg/Non-Veg, Trending, Availability).
-- **Interactive Table Reservation**: Visual table layout across multiple floors (Ground, Lounge, Patio) with real-time availability checking.
-- **Admin Dashboard**: 
-  - Real-time analytics (Weekly revenue, booking counts, trending dishes).
-  - Menu Management (CRUD operations with Cloudinary image upload).
-  - Reservation Management (Update status: Pending, Confirmed, Completed, Cancelled).
-- **Authentication**: Secure login using Google OAuth 2.0.
-- **Responsive Design**: Premium aesthetics with smooth animations and glassmorphism effects.
+Annapurna is built as a two-tier application: a React/TypeScript client and a Node.js/Express API server, backed by MongoDB. It supports customer-facing menu and reservation flows alongside an internal admin console for staff to manage inventory, reservations, and performance metrics.
 
-## 🛠️ Tech Stack
+## Features
 
-- **Frontend**: React.js, TypeScript, Vite, Lucide React, Axios, CSS Variables (Design System).
-- **Backend**: Node.js, Express, TypeScript, Mongoose.
-- **Database**: MongoDB Atlas.
-- **Authentication**: Passport.js (Google Strategy), JWT.
-- **Cloud Storage**: Cloudinary (for menu item images).
+- **Menu Management** — Categorized menu catalog with dietary classification (veg/non-veg), availability status, and trending indicators.
+- **Table Reservations** — Interactive floor plan (Ground, Lounge, Patio) with real-time availability and booking status tracking (Pending, Confirmed, Completed, Cancelled).
+- **Admin Dashboard** — Weekly revenue and booking analytics, menu CRUD operations with image upload, and reservation lifecycle management.
+- **Authentication** — Google OAuth 2.0 via Passport.js, session management with JWT.
+- **Responsive UI** — Component-driven design system built on CSS variables.
 
----
+## Architecture
 
-## 🚀 Getting Started
+| Layer | Technology |
+|---|---|
+| Frontend | React, TypeScript, Vite, Axios |
+| Backend | Node.js, Express, TypeScript, Mongoose |
+| Database | MongoDB Atlas |
+| Auth | Passport.js (Google OAuth strategy), JWT |
+| Media Storage | Cloudinary |
 
-### Prerequisites
+## Prerequisites
 
-- [Node.js](https://nodejs.org/) (v16+ recommended)
-- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) account
-- [Cloudinary](https://cloudinary.com/) account
-- [Google Cloud Console](https://console.cloud.google.com/) project (for OAuth)
+- Node.js v16 or later
+- A MongoDB Atlas cluster
+- A Cloudinary account
+- A Google Cloud Console project with OAuth 2.0 credentials
 
-### 1. Clone the Repository
+## Setup
+
+### 1. Clone the repository
+
 ```bash
 git clone https://github.com/lightning4747/Restaurant.git
 cd Restaurant
 ```
 
-### 2. Backend Setup
-Navigate to the server directory and install dependencies:
+### 2. Backend
+
 ```bash
 cd server
 npm install
 ```
 
-Create a `.env` file in the `server` directory:
+Create a `.env` file in `server/` using the template below. **Do not commit this file or any real credentials to version control.**
+
 ```env
 PORT=8000
 NODE_ENV=development
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-JWT_EXPIRES_IN=7d
 
-# Google OAuth
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
+# Database
+MONGO_URI=
+
+# Auth
+JWT_SECRET=
+JWT_EXPIRES_IN=7d
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
 GOOGLE_CALLBACK_URL=http://localhost:8000/api/auth/google/callback
 
 # Cloudinary
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
 
 # URLs
 CLIENT_URL=http://localhost:5173
 FRONTEND_URL=http://localhost:5173
 
-# Admin Initial Setup
-ADMIN_EMAIL=admin@example.com # vignesh112847@gmail.com
-ADMIN_PASSWORD=admin_password # vignesh1128
-// included the admin and admin mail for test purposes
+# Initial admin bootstrap (set once, then rotate/remove)
+ADMIN_EMAIL=
+ADMIN_PASSWORD=
 ```
 
-**Seed the Database:**
-```bash
-# Seed Menu Categories and Items
-npm run seed
+Seed the database and start the server:
 
-# Seed Table Layout (Ground, Lounge, Patio)
-npm run seed:tables
-```
-
-**Start the Backend:**
 ```bash
+npm run seed          # menu categories and items
+npm run seed:tables   # table/floor layout
 npm run dev
 ```
 
-### 3. Frontend Setup
-Navigate to the client directory and install dependencies:
+### 3. Frontend
+
 ```bash
 cd ../client
 npm install
 ```
 
-Create a `.env` file in the `client` directory:
+Create a `.env` file in `client/`:
+
 ```env
 VITE_API_URL=http://localhost:8000/api
-VITE_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+VITE_GOOGLE_MAPS_API_KEY=
 ```
 
-**Start the Frontend:**
+Start the client:
+
 ```bash
 npm run dev
 ```
 
----
+## Configuration Reference
 
-## 🔑 Key API Keys & Configuration
+| Service | Purpose | Provisioning |
+|---|---|---|
+| MongoDB Atlas | Primary datastore | mongodb.com |
+| Google OAuth | Authentication | Google Cloud Console |
+| Cloudinary | Menu image storage | cloudinary.com |
+| Google Maps API | Contact/location page | Google Cloud Console |
 
-| Service | Purpose | Where to get |
-|---------|---------|--------------|
-| **MongoDB Atlas** | Database | [mongodb.com](https://www.mongodb.com/) |
-| **Google OAuth** | Login | [Google Cloud Console](https://console.cloud.google.com/) |
-| **Cloudinary** | Image Uploads | [cloudinary.com](https://cloudinary.com/) |
-| **Google Maps** | Contact Page | [Google Cloud Console](https://console.cloud.google.com/) |
+## Security Notes
 
----
+- All secrets are supplied via environment variables and must never be committed to source control.
+- The `ADMIN_EMAIL` / `ADMIN_PASSWORD` bootstrap values are for initial setup only; rotate or disable them after the first admin account is provisioned.
+- Add `.env` to `.gitignore` in both `server/` and `client/` if not already present.
 
-## 📸 Screenshots
+## Screenshots
 
 ### Home Page
 ![Home Page](client/public/screenshots/homeintro.png)
@@ -144,4 +146,6 @@ npm run dev
 ### Authentication
 ![Auth](client/public/screenshots/signup.png)
 
+## License
 
+Specify a license (e.g., MIT) here if this project is intended for public distribution.
